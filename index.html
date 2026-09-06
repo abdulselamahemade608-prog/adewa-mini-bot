@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -10,1686 +12,2198 @@
 
     <title>ADEWA Mini Bot</title>
 
-    <!-- Telegram Mini App -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <!-- CSS -->
     <style>
-        /* CSS CODE GOES HERE */
+
         * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    --bg: #f5f7fb;
-    --card: #ffffff;
-    --text: #111827;
-    --muted: #6b7280;
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --border: #e5e7eb;
-    --success: #16a34a;
-    --danger: #dc2626;
-}
-
-body {
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-
-    background: var(--bg);
-    color: var(--text);
-
-    min-height: 100vh;
-}
-
-button,
-input {
-    font: inherit;
-}
-
-button {
-    border: none;
-    cursor: pointer;
-}
-
-.app {
-    width: 100%;
-    max-width: 520px;
-    margin: auto;
-    padding: 18px 16px 40px;
-}
-
-
-/* =========================================
-   HEADER
-========================================= */
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 18px;
-}
-
-.profile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --text: #111827;
+            --muted: #6b7280;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --border: #e5e7eb;
+            --success: #16a34a;
+            --danger: #dc2626;
+        }
+
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+        }
+
+        .app {
+            width: 100%;
+            max-width: 520px;
+            margin: auto;
+            padding: 18px 16px 40px;
+        }
+
+        /* HEADER */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--primary);
+            color: white;
+
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .welcome {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .icon-button {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 12px;
 
-.avatar {
-    width: 48px;
-    height: 48px;
+            background: var(--card);
+            color: var(--text);
 
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+            font-size: 23px;
 
-    background: var(--primary);
-    color: white;
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.05);
+        }
 
-    font-size: 20px;
-    font-weight: 700;
-}
+        /* BALANCE */
 
-.profile-info {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
+        .balance-card {
+            background: var(--primary);
+            color: white;
 
-.welcome {
-    font-size: 14px;
-    color: var(--muted);
-}
+            border-radius: 22px;
 
-.username {
-    font-size: 18px;
-    font-weight: 700;
-}
+            padding: 24px;
+            margin-bottom: 16px;
 
-.icon-button {
-    width: 42px;
-    height: 42px;
+            box-shadow:
+                0 10px 30px rgba(37, 99, 235, 0.22);
+        }
 
-    border-radius: 12px;
+        .balance-label {
+            font-size: 14px;
+            opacity: 0.85;
+        }
 
-    background: var(--card);
-    color: var(--text);
+        .balance {
+            margin-top: 8px;
 
-    font-size: 23px;
+            font-size: 36px;
+            font-weight: 800;
+        }
 
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
-}
+        .currency {
+            font-size: 17px;
+            font-weight: 600;
+        }
 
+        .balance-bottom {
+            display: flex;
+            justify-content: space-between;
 
-/* =========================================
-   BALANCE
-========================================= */
+            margin-top: 18px;
 
-.balance-card {
-    background: var(--primary);
-    color: white;
+            font-size: 13px;
+            opacity: 0.9;
+        }
 
-    border-radius: 22px;
+        /* STATS */
 
-    padding: 24px;
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
 
-    margin-bottom: 16px;
+            margin-bottom: 24px;
+        }
 
-    box-shadow:
-        0 10px 30px rgba(37, 99, 235, 0.22);
-}
+        .stat-card {
+            background: var(--card);
 
-.balance-label {
-    font-size: 14px;
-    opacity: 0.85;
-}
+            border: 1px solid var(--border);
 
-.balance {
-    margin-top: 8px;
+            border-radius: 16px;
 
-    font-size: 36px;
-    font-weight: 800;
-}
+            padding: 15px 8px;
 
-.currency {
-    font-size: 17px;
-    font-weight: 600;
-}
+            text-align: center;
+        }
 
-.balance-bottom {
-    display: flex;
-    justify-content: space-between;
+        .stat-icon {
+            font-size: 21px;
+            margin-bottom: 6px;
+        }
 
-    margin-top: 18px;
+        .stat-value {
+            font-size: 17px;
+            font-weight: 800;
+        }
 
-    font-size: 13px;
-    opacity: 0.9;
-}
+        .stat-label {
+            margin-top: 3px;
 
+            font-size: 11px;
+            color: var(--muted);
+        }
 
-/* =========================================
-   STATS
-========================================= */
+        /* SECTION */
 
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+        .section {
+            margin-bottom: 24px;
+        }
 
-    margin-bottom: 24px;
-}
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
 
-.stat-card {
-    background: var(--card);
+            margin-bottom: 10px;
+        }
 
-    border: 1px solid var(--border);
+        /* ACTION */
 
-    border-radius: 16px;
+        .action-card {
+            width: 100%;
 
-    padding: 15px 8px;
+            display: flex;
+            align-items: center;
 
-    text-align: center;
-}
+            text-align: left;
 
-.stat-icon {
-    font-size: 21px;
-    margin-bottom: 6px;
-}
+            background: var(--card);
 
-.stat-value {
-    font-size: 17px;
-    font-weight: 800;
-}
+            border: 1px solid var(--border);
 
-.stat-label {
-    margin-top: 3px;
+            border-radius: 17px;
 
-    font-size: 11px;
-    color: var(--muted);
-}
+            padding: 15px;
 
+            margin-bottom: 10px;
 
-/* =========================================
-   SECTION
-========================================= */
+            transition: transform 0.15s ease;
+        }
 
-.section {
-    margin-bottom: 24px;
-}
+        .action-card:active {
+            transform: scale(0.98);
+        }
 
-.section-title {
-    font-size: 18px;
-    font-weight: 800;
+        .action-icon {
+            width: 46px;
+            height: 46px;
 
-    margin-bottom: 10px;
-}
+            border-radius: 14px;
 
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-/* =========================================
-   ACTION CARD
-========================================= */
+            font-size: 22px;
 
-.action-card {
-    width: 100%;
+            margin-right: 13px;
+        }
 
-    display: flex;
-    align-items: center;
+        .ads {
+            background: #eef2ff;
+        }
 
-    text-align: left;
+        .tasks {
+            background: #ecfdf5;
+        }
 
-    background: var(--card);
+        .referral {
+            background: #fff7ed;
+        }
 
-    border: 1px solid var(--border);
+        .history {
+            background: #f3f4f6;
+        }
 
-    border-radius: 17px;
+        .withdraw {
+            background: #fef2f2;
+        }
 
-    padding: 15px;
+        .action-content {
+            flex: 1;
+        }
 
-    margin-bottom: 10px;
+        .action-title {
+            font-size: 15px;
+            font-weight: 750;
 
-    transition: transform 0.15s ease;
-}
+            margin-bottom: 4px;
+        }
 
-.action-card:active {
-    transform: scale(0.98);
-}
+        .action-description {
+            color: var(--muted);
 
-.action-icon {
-    width: 46px;
-    height: 46px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
 
-    border-radius: 14px;
+        .arrow {
+            font-size: 25px;
+            color: #9ca3af;
+        }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        /* PANELS */
 
-    font-size: 22px;
+        .panel {
+            background: var(--card);
 
-    margin-right: 13px;
-}
+            border-radius: 20px;
 
-.ads {
-    background: #eef2ff;
-}
+            padding: 18px;
 
-.tasks {
-    background: #ecfdf5;
-}
+            margin-top: 15px;
 
-.referral {
-    background: #fff7ed;
-}
+            border: 1px solid var(--border);
+        }
 
-.history {
-    background: #f3f4f6;
-}
+        .hidden {
+            display: none !important;
+        }
 
-.withdraw {
-    background: #fef2f2;
-}
+        .panel-header {
+            display: flex;
+            align-items: center;
 
-.action-content {
-    flex: 1;
-}
+            gap: 12px;
 
-.action-title {
-    font-size: 15px;
-    font-weight: 750;
+            margin-bottom: 28px;
+        }
 
-    margin-bottom: 4px;
-}
+        .panel-header button {
+            width: 38px;
+            height: 38px;
 
-.action-description {
-    color: var(--muted);
+            border-radius: 11px;
 
-    font-size: 12px;
-    line-height: 1.4;
-}
+            background: var(--bg);
 
-.arrow {
-    font-size: 25px;
-    color: #9ca3af;
-}
+            font-size: 20px;
+        }
 
+        .panel-header h2 {
+            font-size: 20px;
+        }
 
-/* =========================================
-   PANELS
-========================================= */
+        /* REFERRAL */
 
-.panel {
-    background: var(--card);
+        .panel-icon {
+            width: 70px;
+            height: 70px;
 
-    border-radius: 20px;
+            border-radius: 20px;
 
-    padding: 18px;
+            background: #fff7ed;
 
-    margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    border: 1px solid var(--border);
-}
+            font-size: 32px;
 
-.hidden {
-    display: none !important;
-}
+            margin: 0 auto 15px;
+        }
 
-.panel-header {
-    display: flex;
-    align-items: center;
+        .panel h3 {
+            text-align: center;
+            font-size: 21px;
+        }
 
-    gap: 12px;
+        .panel > p {
+            text-align: center;
+            color: var(--muted);
 
-    margin-bottom: 28px;
-}
+            margin: 8px 0 18px;
+        }
 
-.panel-header button {
-    width: 38px;
-    height: 38px;
+        .referral-reward {
+            background: #eff6ff;
 
-    border-radius: 11px;
+            border-radius: 15px;
 
-    background: var(--bg);
+            padding: 15px;
 
-    font-size: 20px;
-}
+            text-align: center;
 
-.panel-header h2 {
-    font-size: 20px;
-}
+            margin-bottom: 15px;
+        }
 
+        .referral-reward strong {
+            display: block;
 
-/* =========================================
-   REFERRAL
-========================================= */
+            color: var(--primary);
 
-.panel-icon {
-    width: 70px;
-    height: 70px;
+            font-size: 25px;
+        }
 
-    border-radius: 20px;
+        .referral-reward span {
+            color: var(--muted);
 
-    background: #fff7ed;
+            font-size: 12px;
+        }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        .referral-box {
+            display: flex;
 
-    font-size: 32px;
+            gap: 8px;
 
-    margin: 0 auto 15px;
-}
+            margin-bottom: 12px;
+        }
 
-.panel h3 {
-    text-align: center;
-    font-size: 21px;
-}
+        .referral-box input {
+            min-width: 0;
+            flex: 1;
 
-.panel > p {
-    text-align: center;
-    color: var(--muted);
+            padding: 12px;
 
-    margin: 8px 0 18px;
-}
+            border: 1px solid var(--border);
+            border-radius: 12px;
 
-.referral-reward {
-    background: #eff6ff;
+            background: var(--bg);
 
-    border-radius: 15px;
+            font-size: 12px;
+        }
 
-    padding: 15px;
+        .referral-box button {
+            padding: 0 15px;
 
-    text-align: center;
+            border-radius: 12px;
 
-    margin-bottom: 15px;
-}
+            background: #111827;
+            color: white;
 
-.referral-reward strong {
-    display: block;
+            font-weight: 700;
+        }
 
-    color: var(--primary);
+        /* BUTTON */
 
-    font-size: 25px;
-}
+        .primary-button {
+            width: 100%;
 
-.referral-reward span {
-    color: var(--muted);
+            padding: 14px;
 
-    font-size: 12px;
-}
+            border-radius: 13px;
 
-.referral-box {
-    display: flex;
+            background: var(--primary);
+            color: white;
 
-    gap: 8px;
+            font-weight: 750;
 
-    margin-bottom: 12px;
-}
+            margin-top: 8px;
+        }
 
-.referral-box input {
-    min-width: 0;
-    flex: 1;
+        .primary-button:active {
+            background: var(--primary-dark);
+        }
 
-    padding: 12px;
+        /* EMPTY */
 
-    border: 1px solid var(--border);
-    border-radius: 12px;
+        .empty-state {
+            text-align: center;
 
-    background: var(--bg);
+            padding: 35px 10px;
 
-    font-size: 12px;
-}
+            color: var(--muted);
+        }
 
-.referral-box button {
-    padding: 0 15px;
+        .empty-icon {
+            font-size: 42px;
 
-    border-radius: 12px;
+            margin-bottom: 12px;
+        }
 
-    background: #111827;
-    color: white;
+        .empty-state h3 {
+            color: var(--text);
 
-    font-weight: 700;
-}
+            margin-bottom: 7px;
+        }
 
+        .empty-state p {
+            margin: 0;
+        }
 
-/* =========================================
-   PRIMARY BUTTON
-========================================= */
+        /* WITHDRAW */
 
-.primary-button {
-    width: 100%;
+        .withdraw-card {
+            padding-top: 5px;
+        }
 
-    padding: 14px;
+        .withdraw-balance {
+            background: var(--bg);
 
-    border-radius: 13px;
+            padding: 15px;
 
-    background: var(--primary);
-    color: white;
+            border-radius: 13px;
 
-    font-weight: 750;
+            margin-bottom: 15px;
 
-    margin-top: 8px;
-}
+            color: var(--muted);
+        }
 
-.primary-button:active {
-    background: var(--primary-dark);
-}
+        .withdraw-balance strong {
+            color: var(--text);
+        }
 
+        .withdraw-card input {
+            width: 100%;
 
-/* =========================================
-   EMPTY STATE
-========================================= */
+            padding: 14px;
 
-.empty-state {
-    text-align: center;
+            border-radius: 13px;
 
-    padding: 35px 10px;
+            border: 1px solid var(--border);
 
-    color: var(--muted);
-}
+            outline: none;
 
-.empty-icon {
-    font-size: 42px;
+            margin-bottom: 10px;
 
-    margin-bottom: 12px;
-}
+            background: var(--bg);
+        }
 
-.empty-state h3 {
-    color: var(--text);
+        .withdraw-card input:focus {
+            border-color: var(--primary);
+        }
 
-    margin-bottom: 7px;
-}
+        .small-note {
+            font-size: 11px !important;
+            color: var(--muted);
+            text-align: center;
+        }
 
-.empty-state p {
-    margin: 0;
-}
+        /* HISTORY */
 
+        .transaction {
+            display: flex;
+            align-items: center;
+            gap: 12px;
 
-/* =========================================
-   WITHDRAW
-========================================= */
+            padding: 13px 0;
 
-.withdraw-card {
-    padding-top: 5px;
-}
+            border-bottom: 1px solid var(--border);
+        }
 
-.withdraw-balance {
-    background: var(--bg);
+        .transaction:last-child {
+            border-bottom: none;
+        }
 
-    padding: 15px;
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
 
-    border-radius: 13px;
+            border-radius: 12px;
 
-    margin-bottom: 15px;
+            background: #eff6ff;
 
-    color: var(--muted);
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.withdraw-balance strong {
-    color: var(--text);
-}
+        .transaction-content {
+            flex: 1;
+        }
 
-.withdraw-card input {
-    width: 100%;
+        .transaction-title {
+            font-weight: 700;
+            font-size: 13px;
+        }
 
-    padding: 14px;
+        .transaction-date {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
 
-    border-radius: 13px;
+        .transaction-amount {
+            font-weight: 800;
+            font-size: 13px;
+        }
 
-    border: 1px solid var(--border);
+        .positive {
+            color: var(--success);
+        }
 
-    outline: none;
+        .negative {
+            color: var(--danger);
+        }
 
-    margin-bottom: 10px;
+        /* LOADING */
 
-    background: var(--bg);
-}
+        .loading {
+            position: fixed;
 
-.withdraw-card input:focus {
-    border-color: var(--primary);
-}
+            inset: 0;
 
-.small-note {
-    font-size: 11px !important;
-    color: var(--muted);
-    text-align: center;
-}
+            background: rgba(255, 255, 255, 0.75);
 
+            display: flex;
 
-/* =========================================
-   LOADING
-========================================= */
+            align-items: center;
+            justify-content: center;
 
-.loading {
-    position: fixed;
+            flex-direction: column;
 
-    inset: 0;
+            gap: 10px;
 
-    background: rgba(255, 255, 255, 0.75);
+            z-index: 1000;
+        }
 
-    display: flex;
+        .spinner {
+            width: 35px;
+            height: 35px;
 
-    align-items: center;
-    justify-content: center;
+            border: 4px solid #dbeafe;
 
-    flex-direction: column;
+            border-top-color: var(--primary);
 
-    gap: 10px;
+            border-radius: 50%;
 
-    z-index: 1000;
-}
+            animation: spin 0.8s linear infinite;
+        }
 
-.spinner {
-    width: 35px;
-    height: 35px;
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
-    border: 4px solid #dbeafe;
-    border-top-color: var(--primary);
+        /* TOAST */
 
-    border-radius: 50%;
+        .toast {
+            position: fixed;
 
-    animation: spin 0.8s linear infinite;
-}
+            left: 50%;
+            bottom: 25px;
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
+            transform:
+                translateX(-50%)
+                translateY(20px);
 
+            background: #111827;
+            color: white;
 
-/* =========================================
-   TOAST
-========================================= */
+            padding: 11px 17px;
 
-.toast {
-    position: fixed;
+            border-radius: 12px;
 
-    left: 50%;
-    bottom: 25px;
+            font-size: 13px;
 
-    transform: translateX(-50%) translateY(20px);
+            opacity: 0;
 
-    background: #111827;
-    color: white;
+            pointer-events: none;
 
-    padding: 11px 17px;
+            transition: 0.25s;
 
-    border-radius: 12px;
+            z-index: 2000;
 
-    font-size: 13px;
+            max-width: 90%;
 
-    opacity: 0;
+            text-align: center;
+        }
 
-    pointer-events: none;
+        .toast.show {
+            opacity: 1;
 
-    transition: 0.25s;
+            transform:
+                translateX(-50%)
+                translateY(0);
+        }
 
-    z-index: 2000;
+        /* MOBILE */
 
-    max-width: 90%;
-    text-align: center;
-}
+        @media (max-width: 380px) {
 
-.toast.show {
-    opacity: 1;
+            .app {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
 
-    transform: translateX(-50%) translateY(0);
-}
+            .balance {
+                font-size: 31px;
+            }
 
+            .stats {
+                gap: 7px;
+            }
 
-/* =========================================
-   MOBILE
-========================================= */
+            .stat-card {
+                padding: 13px 5px;
+            }
 
-@media (max-width: 380px) {
+        }
 
-    .app {
-        padding-left: 12px;
-        padding-right: 12px;
-    }
-
-    .balance {
-        font-size: 31px;
-    }
-
-    .stats {
-        gap: 7px;
-    }
-
-    .stat-card {
-        padding: 13px 5px;
-    }
-    }
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- =========================================
-         APP
-    ========================================== -->
+<div class="app">
 
-    <div class="app">
 
-        <!-- HEADER -->
-        <header class="header">
+    <!-- HEADER -->
 
-            <div class="profile">
+    <header class="header">
 
-                <div id="avatar" class="avatar">
-                    A
-                </div>
+        <div class="profile">
 
-                <div class="profile-info">
-                    <div id="welcomeText" class="welcome">
-                        Welcome
-                    </div>
-
-                    <div id="username" class="username">
-                        Loading...
-                    </div>
-                </div>
-
-            </div>
-
-            <button
-                class="icon-button"
-                onclick="refreshUser()"
+            <div
+                id="avatar"
+                class="avatar"
             >
-                ↻
-            </button>
-
-        </header>
-
-
-        <!-- BALANCE CARD -->
-        <section class="balance-card">
-
-            <div class="balance-label">
-                Available Balance
+                A
             </div>
 
-            <div class="balance">
-                <span id="balance">0.00</span>
-                <span class="currency">Birr</span>
-            </div>
-
-            <div class="balance-bottom">
-
-                <span>
-                    Total earned
-                </span>
-
-                <span id="totalEarned">
-                    0.00 Birr
-                </span>
-
-            </div>
-
-        </section>
-
-
-        <!-- STATS -->
-        <section class="stats">
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    👥
-                </div>
-
-                <div class="stat-value" id="referralCount">
-                    0
-                </div>
-
-                <div class="stat-label">
-                    Referrals
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    ✅
-                </div>
-
-                <div class="stat-value" id="taskCount">
-                    0
-                </div>
-
-                <div class="stat-label">
-                    Tasks
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    💰
-                </div>
-
-                <div class="stat-value">
-                    1
-                </div>
-
-                <div class="stat-label">
-                    Per Referral
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- MAIN ACTIONS -->
-        <section class="section">
-
-            <div class="section-title">
-                Earn
-            </div>
-
-
-            <!-- WATCH ADS -->
-            <button
-                class="action-card"
-                onclick="watchAds()"
-            >
-
-                <div class="action-icon ads">
-                    📺
-                </div>
-
-                <div class="action-content">
-
-                    <div class="action-title">
-                        Watch Ads
-                    </div>
-
-                    <div class="action-description">
-                        Watch available ads and earn rewards
-                    </div>
-
-                </div>
-
-                <div class="arrow">
-                    ›
-                </div>
-
-            </button>
-
-
-            <!-- TASKS -->
-            <button
-                class="action-card"
-                onclick="openTasks()"
-            >
-
-                <div class="action-icon tasks">
-                    🎯
-                </div>
-
-                <div class="action-content">
-
-                    <div class="action-title">
-                        Tasks
-                    </div>
-
-                    <div class="action-description">
-                        Complete tasks and earn Birr
-                    </div>
-
-                </div>
-
-                <div class="arrow">
-                    ›
-                </div>
-
-            </button>
-
-
-            <!-- REFERRAL -->
-            <button
-                class="action-card"
-                onclick="openReferral()"
-            >
-
-                <div class="action-icon referral">
-                    👥
-                </div>
-
-                <div class="action-content">
-
-                    <div class="action-title">
-                        Invite Friends
-                    </div>
-
-                    <div class="action-description">
-                        Earn 1 Birr for each qualifying referral
-                    </div>
-
-                </div>
-
-                <div class="arrow">
-                    ›
-                </div>
-
-            </button>
-
-        </section>
-
-
-        <!-- ACCOUNT -->
-        <section class="section">
-
-            <div class="section-title">
-                Account
-            </div>
-
-
-            <!-- HISTORY -->
-            <button
-                class="action-card"
-                onclick="openHistory()"
-            >
-
-                <div class="action-icon history">
-                    📜
-                </div>
-
-                <div class="action-content">
-
-                    <div class="action-title">
-                        History
-                    </div>
-
-                    <div class="action-description">
-                        View your earning history
-                    </div>
-
-                </div>
-
-                <div class="arrow">
-                    ›
-                </div>
-
-            </button>
-
-
-            <!-- WITHDRAW -->
-            <button
-                class="action-card"
-                onclick="openWithdraw()"
-            >
-
-                <div class="action-icon withdraw">
-                    💸
-                </div>
-
-                <div class="action-content">
-
-                    <div class="action-title">
-                        Withdraw
-                    </div>
-
-                    <div class="action-description">
-                        Request a withdrawal
-                    </div>
-
-                </div>
-
-                <div class="arrow">
-                    ›
-                </div>
-
-            </button>
-
-        </section>
-
-
-        <!-- REFERRAL PANEL -->
-        <section
-            id="referralPanel"
-            class="panel hidden"
-        >
-
-            <div class="panel-header">
-
-                <button onclick="closePanels()">
-                    ←
-                </button>
-
-                <h2>
-                    Invite Friends
-                </h2>
-
-            </div>
-
-            <div class="panel-icon">
-                👥
-            </div>
-
-            <h3>
-                Invite & Earn
-            </h3>
-
-            <p>
-                Share your referral link with friends.
-            </p>
-
-            <div class="referral-reward">
-                <strong>1 Birr</strong>
-                <span>per qualifying referral</span>
-            </div>
-
-            <div class="referral-box">
-
-                <input
-                    id="referralLink"
-                    type="text"
-                    readonly
+            <div class="profile-info">
+
+                <div
+                    id="welcomeText"
+                    class="welcome"
                 >
-
-                <button onclick="copyReferral()">
-                    Copy
-                </button>
-
-            </div>
-
-            <button
-                class="primary-button"
-                onclick="shareReferral()"
-            >
-                Share Referral Link
-            </button>
-
-        </section>
-
-
-        <!-- SIMPLE PANEL -->
-        <section
-            id="tasksPanel"
-            class="panel hidden"
-        >
-
-            <div class="panel-header">
-
-                <button onclick="closePanels()">
-                    ←
-                </button>
-
-                <h2>
-                    Tasks
-                </h2>
-
-            </div>
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    🎯
+                    Welcome
                 </div>
 
-                <h3>
-                    Tasks
-                </h3>
-
-                <p>
-                    Available tasks will appear here.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- ADS PANEL -->
-        <section
-            id="adsPanel"
-            class="panel hidden"
-        >
-
-            <div class="panel-header">
-
-                <button onclick="closePanels()">
-                    ←
-                </button>
-
-                <h2>
-                    Watch Ads
-                </h2>
-
-            </div>
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    📺
-                </div>
-
-                <h3>
-                    Watch Ads
-                </h3>
-
-                <p>
-                    Ad rewards will be connected to the backend here.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- HISTORY PANEL -->
-        <section
-            id="historyPanel"
-            class="panel hidden"
-        >
-
-            <div class="panel-header">
-
-                <button onclick="closePanels()">
-                    ←
-                </button>
-
-                <h2>
-                    History
-                </h2>
-
-            </div>
-
-            <div id="historyList">
-                <div class="empty-state">
-                    <div class="empty-icon">
-                        📜
-                    </div>
-
-                    <p>
-                        No transactions yet.
-                    </p>
-                </div>
-            </div>
-
-        </section>
-
-
-        <!-- WITHDRAW PANEL -->
-        <section
-            id="withdrawPanel"
-            class="panel hidden"
-        >
-
-            <div class="panel-header">
-
-                <button onclick="closePanels()">
-                    ←
-                </button>
-
-                <h2>
-                    Withdraw
-                </h2>
-
-            </div>
-
-            <div class="withdraw-card">
-
-                <div class="withdraw-balance">
-                    Balance:
-                    <strong>
-                        <span id="withdrawBalance">
-                            0.00
-                        </span>
-                        Birr
-                    </strong>
-                </div>
-
-                <input
-                    id="withdrawAmount"
-                    type="number"
-                    min="1"
-                    placeholder="Amount"
+                <div
+                    id="username"
+                    class="username"
                 >
-
-                <input
-                    id="withdrawWallet"
-                    type="text"
-                    placeholder="Wallet address"
-                >
-
-                <button
-                    class="primary-button"
-                    onclick="requestWithdraw()"
-                >
-                    Request Withdrawal
-                </button>
-
-                <p class="small-note">
-                    Minimum withdrawal rules will be checked by the backend.
-                </p>
+                    Loading...
+                </div>
 
             </div>
 
-        </section>
-
-
-        <!-- LOADING -->
-        <div
-            id="loading"
-            class="loading hidden"
-        >
-            <div class="spinner"></div>
-            <span>Loading...</span>
         </div>
 
 
-        <!-- TOAST -->
-        <div
-            id="toast"
-            class="toast"
-        ></div>
+        <button
+            class="icon-button"
+            onclick="refreshUser()"
+        >
+            ↻
+        </button>
+
+    </header>
+
+
+    <!-- BALANCE -->
+
+    <section class="balance-card">
+
+        <div class="balance-label">
+            Available Balance
+        </div>
+
+        <div class="balance">
+
+            <span id="balance">
+                0.00
+            </span>
+
+            <span class="currency">
+                Birr
+            </span>
+
+        </div>
+
+
+        <div class="balance-bottom">
+
+            <span>
+                Total earned
+            </span>
+
+            <span id="totalEarned">
+                0.00 Birr
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👥
+            </div>
+
+            <div
+                class="stat-value"
+                id="referralCount"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Referrals
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+            <div
+                class="stat-value"
+                id="taskCount"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Tasks
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                💰
+            </div>
+
+            <div class="stat-value">
+                1
+            </div>
+
+            <div class="stat-label">
+                Per Referral
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- EARN -->
+
+    <section class="section">
+
+        <div class="section-title">
+            Earn
+        </div>
+
+
+        <!-- ADS -->
+
+        <button
+            class="action-card"
+            onclick="watchAds()"
+        >
+
+            <div class="action-icon ads">
+                📺
+            </div>
+
+            <div class="action-content">
+
+                <div class="action-title">
+                    Watch Ads
+                </div>
+
+                <div class="action-description">
+                    Watch available ads and earn rewards
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+
+        <!-- TASKS -->
+
+        <button
+            class="action-card"
+            onclick="openTasks()"
+        >
+
+            <div class="action-icon tasks">
+                🎯
+            </div>
+
+            <div class="action-content">
+
+                <div class="action-title">
+                    Tasks
+                </div>
+
+                <div class="action-description">
+                    Complete tasks and earn Birr
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+
+        <!-- REFERRAL -->
+
+        <button
+            class="action-card"
+            onclick="openReferral()"
+        >
+
+            <div class="action-icon referral">
+                👥
+            </div>
+
+            <div class="action-content">
+
+                <div class="action-title">
+                    Invite Friends
+                </div>
+
+                <div class="action-description">
+                    Earn 1 Birr for each qualifying referral
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+    </section>
+
+
+    <!-- ACCOUNT -->
+
+    <section class="section">
+
+        <div class="section-title">
+            Account
+        </div>
+
+
+        <!-- HISTORY -->
+
+        <button
+            class="action-card"
+            onclick="openHistory()"
+        >
+
+            <div class="action-icon history">
+                📜
+            </div>
+
+            <div class="action-content">
+
+                <div class="action-title">
+                    History
+                </div>
+
+                <div class="action-description">
+                    View your earning history
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+
+        <!-- WITHDRAW -->
+
+        <button
+            class="action-card"
+            onclick="openWithdraw()"
+        >
+
+            <div class="action-icon withdraw">
+                💸
+            </div>
+
+            <div class="action-content">
+
+                <div class="action-title">
+                    Withdraw
+                </div>
+
+                <div class="action-description">
+                    Request a withdrawal
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+    </section>
+
+
+    <!-- REFERRAL PANEL -->
+
+    <section
+        id="referralPanel"
+        class="panel hidden"
+    >
+
+        <div class="panel-header">
+
+            <button onclick="closePanels()">
+                ←
+            </button>
+
+            <h2>
+                Invite Friends
+            </h2>
+
+        </div>
+
+
+        <div class="panel-icon">
+            👥
+        </div>
+
+
+        <h3>
+            Invite & Earn
+        </h3>
+
+
+        <p>
+            Share your referral link with friends.
+        </p>
+
+
+        <div class="referral-reward">
+
+            <strong>
+                1 Birr
+            </strong>
+
+            <span>
+                per qualifying referral
+            </span>
+
+        </div>
+
+
+        <div class="referral-box">
+
+            <input
+                id="referralLink"
+                type="text"
+                readonly
+            >
+
+            <button
+                onclick="copyReferral()"
+            >
+                Copy
+            </button>
+
+        </div>
+
+
+        <button
+            class="primary-button"
+            onclick="shareReferral()"
+        >
+            Share Referral Link
+        </button>
+
+    </section>
+
+
+    <!-- TASKS -->
+
+    <section
+        id="tasksPanel"
+        class="panel hidden"
+    >
+
+        <div class="panel-header">
+
+            <button onclick="closePanels()">
+                ←
+            </button>
+
+            <h2>
+                Tasks
+            </h2>
+
+        </div>
+
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                🎯
+            </div>
+
+            <h3>
+                Tasks
+            </h3>
+
+            <p>
+                Available tasks will appear here.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ADS -->
+
+    <section
+        id="adsPanel"
+        class="panel hidden"
+    >
+
+        <div class="panel-header">
+
+            <button onclick="closePanels()">
+                ←
+            </button>
+
+            <h2>
+                Watch Ads
+            </h2>
+
+        </div>
+
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                📺
+            </div>
+
+            <h3>
+                Watch Ads
+            </h3>
+
+            <p>
+                Ad rewards will be connected to the backend.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section
+        id="historyPanel"
+        class="panel hidden"
+    >
+
+        <div class="panel-header">
+
+            <button onclick="closePanels()">
+                ←
+            </button>
+
+            <h2>
+                History
+            </h2>
+
+        </div>
+
+
+        <div id="historyList">
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📜
+                </div>
+
+                <p>
+                    Loading history...
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WITHDRAW -->
+
+    <section
+        id="withdrawPanel"
+        class="panel hidden"
+    >
+
+        <div class="panel-header">
+
+            <button onclick="closePanels()">
+                ←
+            </button>
+
+            <h2>
+                Withdraw
+            </h2>
+
+        </div>
+
+
+        <div class="withdraw-card">
+
+            <div class="withdraw-balance">
+
+                Balance:
+
+                <strong>
+
+                    <span id="withdrawBalance">
+                        0.00
+                    </span>
+
+                    Birr
+
+                </strong>
+
+            </div>
+
+
+            <input
+                id="withdrawAmount"
+                type="number"
+                min="1"
+                placeholder="Amount"
+            >
+
+
+            <input
+                id="withdrawWallet"
+                type="text"
+                placeholder="Wallet address"
+            >
+
+
+            <button
+                class="primary-button"
+                onclick="requestWithdraw()"
+            >
+                Request Withdrawal
+            </button>
+
+
+            <p class="small-note">
+                Minimum withdrawal rules will be checked by the backend.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOADING -->
+
+    <div
+        id="loading"
+        class="loading hidden"
+    >
+
+        <div class="spinner"></div>
+
+        <span>
+            Loading...
+        </span>
 
     </div>
 
 
-    <!-- JavaScript -->
-    <script>
-        /* JAVASCRIPT CODE GOES HERE */
-        // ==========================================
-// TELEGRAM
-// ==========================================
+    <!-- TOAST -->
 
-const tg = window.Telegram.WebApp;
-
-tg.ready();
-tg.expand();
+    <div
+        id="toast"
+        class="toast"
+    ></div>
 
 
-// ==========================================
-// API
-// ==========================================
-
-// IMPORTANT:
-// Replace this with your REAL Vercel API URL.
-
-const API_URL =
-    "https://adewa-mini-backend.vercel.app";
+</div>
 
 
-// ==========================================
-// GLOBAL USER
-// ==========================================
+<script>
 
-let currentUser = null;
+    // ==========================================
+    // TELEGRAM
+    // ==========================================
 
+    const tg = window.Telegram.WebApp;
 
-// ==========================================
-// ELEMENTS
-// ==========================================
+    tg.ready();
 
-const balanceEl =
-    document.getElementById("balance");
-
-const totalEarnedEl =
-    document.getElementById("totalEarned");
-
-const referralCountEl =
-    document.getElementById("referralCount");
-
-const taskCountEl =
-    document.getElementById("taskCount");
-
-const usernameEl =
-    document.getElementById("username");
-
-const welcomeTextEl =
-    document.getElementById("welcomeText");
-
-const avatarEl =
-    document.getElementById("avatar");
+    tg.expand();
 
 
-// ==========================================
-// LOADING
-// ==========================================
+    // ==========================================
+    // API URL
+    // ==========================================
 
-function showLoading() {
-    document
-        .getElementById("loading")
-        .classList
-        .remove("hidden");
-}
+    const API_URL =
+        "https://adewa-mini-backend.vercel.app";
 
 
-function hideLoading() {
-    document
-        .getElementById("loading")
-        .classList
-        .add("hidden");
-}
+    // ==========================================
+    // GLOBAL USER
+    // ==========================================
+
+    let currentUser = null;
 
 
-// ==========================================
-// TOAST
-// ==========================================
+    // ==========================================
+    // ELEMENTS
+    // ==========================================
 
-function showToast(message) {
+    const balanceEl =
+        document.getElementById("balance");
 
-    const toast =
-        document.getElementById("toast");
+    const totalEarnedEl =
+        document.getElementById("totalEarned");
 
-    toast.textContent = message;
+    const referralCountEl =
+        document.getElementById("referralCount");
 
-    toast.classList.add("show");
+    const taskCountEl =
+        document.getElementById("taskCount");
 
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2500);
-}
+    const usernameEl =
+        document.getElementById("username");
+
+    const welcomeTextEl =
+        document.getElementById("welcomeText");
+
+    const avatarEl =
+        document.getElementById("avatar");
 
 
-// ==========================================
-// LOAD USER
-// ==========================================
+    // ==========================================
+    // LOADING
+    // ==========================================
 
-async function loadUser() {
+    function showLoading() {
 
-    showLoading();
+        document
+            .getElementById("loading")
+            .classList
+            .remove("hidden");
 
-    try {
+    }
 
-        const initData = tg.initData;
 
-        if (!initData) {
+    function hideLoading() {
+
+        document
+            .getElementById("loading")
+            .classList
+            .add("hidden");
+
+    }
+
+
+    // ==========================================
+    // TOAST
+    // ==========================================
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById("toast");
+
+        toast.textContent =
+            message;
+
+        toast.classList.add("show");
+
+
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 2500);
+
+    }
+
+
+    // ==========================================
+    // LOAD USER
+    // ==========================================
+
+    async function loadUser() {
+
+        showLoading();
+
+
+        try {
+
+            const initData =
+                tg.initData;
+
+
+            if (!initData) {
+
+                showToast(
+                    "Please open this Mini App from Telegram."
+                );
+
+                return;
+
+            }
+
+
+            const response =
+                await fetch(
+
+                    API_URL + "/api/me",
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                initData:
+                                    initData
+
+                            })
+
+                    }
+
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+
+                    data.error ||
+                    "Unable to load account"
+
+                );
+
+            }
+
+
+            currentUser =
+                data.user;
+
+
+            updateUI();
+
+
+        }
+        catch (error) {
+
+            console.error(error);
+
 
             showToast(
-                "Please open this Mini App from Telegram."
+
+                error.message ||
+                "Something went wrong."
+
             );
 
+        }
+        finally {
+
+            hideLoading();
+
+        }
+
+    }
+
+
+    // ==========================================
+    // UPDATE UI
+    // ==========================================
+
+    function updateUI() {
+
+        if (!currentUser) {
             return;
         }
 
 
-        const response = await fetch(
-            API_URL + "/api/me",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    initData: initData
-                })
-            }
-        );
+        const firstName =
+            currentUser.first_name ||
+            "User";
 
 
-        const data =
-            await response.json();
+        welcomeTextEl.textContent =
+            "Welcome";
 
 
-        if (!response.ok || !data.success) {
+        usernameEl.textContent =
 
-            throw new Error(
-                data.error ||
-                "Unable to load account"
+            currentUser.username
+
+                ? "@" +
+                  currentUser.username
+
+                : firstName;
+
+
+        avatarEl.textContent =
+
+            firstName
+                .charAt(0)
+                .toUpperCase();
+
+
+        const balance =
+            Number(
+                currentUser.balance || 0
             );
+
+
+        balanceEl.textContent =
+            balance.toFixed(2);
+
+
+        totalEarnedEl.textContent =
+            balance.toFixed(2) +
+            " Birr";
+
+
+        referralCountEl.textContent =
+            currentUser.referral_count || 0;
+
+
+        taskCountEl.textContent =
+            currentUser.tasks_completed || 0;
+
+
+        document
+            .getElementById(
+                "withdrawBalance"
+            )
+            .textContent =
+            balance.toFixed(2);
+
+
+        createReferralLink();
+
+    }
+
+
+    // ==========================================
+    // REFERRAL LINK
+    // ==========================================
+
+    function createReferralLink() {
+
+        if (!currentUser) {
+            return;
         }
 
 
-        currentUser =
-            data.user;
+        const userId =
+            currentUser.telegram_id;
 
 
-        updateUI();
+        const link =
+
+            "https://t.me/M_r_work2bot?start=ref_" +
+            userId;
 
 
-    } catch (error) {
+        document
+            .getElementById(
+                "referralLink"
+            )
+            .value =
+            link;
 
-        console.error(error);
+    }
+
+
+    // ==========================================
+    // REFRESH
+    // ==========================================
+
+    async function refreshUser() {
+
+        await loadUser();
+
 
         showToast(
-            error.message ||
-            "Something went wrong."
+            "Account updated."
         );
 
-    } finally {
-
-        hideLoading();
-    }
-}
-
-
-// ==========================================
-// UPDATE UI
-// ==========================================
-
-function updateUI() {
-
-    if (!currentUser) {
-        return;
     }
 
 
-    const firstName =
-        currentUser.first_name ||
-        "User";
+    // ==========================================
+    // CLOSE PANELS
+    // ==========================================
 
+    function closePanels() {
 
-    welcomeTextEl.textContent =
-        "Welcome";
+        document
+            .querySelectorAll(".panel")
+            .forEach(panel => {
 
+                panel.classList.add(
+                    "hidden"
+                );
 
-    usernameEl.textContent =
-        currentUser.username
-            ? "@" + currentUser.username
-            : firstName;
+            });
 
-
-    avatarEl.textContent =
-        firstName
-            .charAt(0)
-            .toUpperCase();
-
-
-    balanceEl.textContent =
-        Number(currentUser.balance || 0)
-            .toFixed(2);
-
-
-    totalEarnedEl.textContent =
-        Number(currentUser.balance || 0)
-            .toFixed(2) + " Birr";
-
-
-    referralCountEl.textContent =
-        currentUser.referral_count || 0;
-
-
-    taskCountEl.textContent =
-        currentUser.tasks_completed || 0;
-
-
-    document
-        .getElementById("withdrawBalance")
-        .textContent =
-        Number(currentUser.balance || 0)
-            .toFixed(2);
-
-
-    createReferralLink();
-}
-
-
-// ==========================================
-// REFERRAL LINK
-// ==========================================
-
-function createReferralLink() {
-
-    if (!currentUser) {
-        return;
     }
 
 
-    const userId =
-        currentUser.telegram_id;
+    // ==========================================
+    // REFERRAL
+    // ==========================================
+
+    function openReferral() {
+
+        closePanels();
 
 
-    const link =
-        "https://t.me/M_r_work2bot?start=ref_" +
-        userId;
+        document
+            .getElementById(
+                "referralPanel"
+            )
+            .classList
+            .remove("hidden");
 
-
-    document
-        .getElementById("referralLink")
-        .value = link;
-}
-
-
-// ==========================================
-// REFRESH
-// ==========================================
-
-async function refreshUser() {
-
-    await loadUser();
-
-    showToast(
-        "Account updated."
-    );
-}
-
-
-// ==========================================
-// OPEN PANELS
-// ==========================================
-
-function closePanels() {
-
-    document
-        .querySelectorAll(".panel")
-        .forEach(panel => {
-
-            panel.classList.add("hidden");
-
-        });
-}
-
-
-function openReferral() {
-
-    closePanels();
-
-    document
-        .getElementById("referralPanel")
-        .classList
-        .remove("hidden");
-}
-
-
-function openTasks() {
-
-    closePanels();
-
-    document
-        .getElementById("tasksPanel")
-        .classList
-        .remove("hidden");
-}
-
-
-function watchAds() {
-
-    closePanels();
-
-    document
-        .getElementById("adsPanel")
-        .classList
-        .remove("hidden");
-}
-
-
-function openHistory() {
-
-    closePanels();
-
-    document
-        .getElementById("historyPanel")
-        .classList
-        .remove("hidden");
-}
-
-
-function openWithdraw() {
-
-    closePanels();
-
-    document
-        .getElementById("withdrawPanel")
-        .classList
-        .remove("hidden");
-
-    document
-        .getElementById("withdrawBalance")
-        .textContent =
-        Number(currentUser?.balance || 0)
-            .toFixed(2);
-}
-
-
-// ==========================================
-// COPY REFERRAL
-// ==========================================
-
-async function copyReferral() {
-
-    const input =
-        document.getElementById("referralLink");
-
-
-    try {
-
-        await navigator.clipboard.writeText(
-            input.value
-        );
-
-        showToast(
-            "Referral link copied."
-        );
-
-    } catch {
-
-        input.select();
-
-        document.execCommand("copy");
-
-        showToast(
-            "Referral link copied."
-        );
-    }
-}
-
-
-// ==========================================
-// SHARE REFERRAL
-// ==========================================
-
-function shareReferral() {
-
-    if (!currentUser) {
-        return;
     }
 
 
-    const link =
-        document.getElementById(
-            "referralLink"
-        ).value;
+    // ==========================================
+    // TASKS
+    // ==========================================
+
+    function openTasks() {
+
+        closePanels();
 
 
-    const text =
-        "Join ADEWA Mini Bot and earn rewards!";
+        document
+            .getElementById(
+                "tasksPanel"
+            )
+            .classList
+            .remove("hidden");
+
+    }
 
 
-    const shareUrl =
-        "https://t.me/share/url?url=" +
-        encodeURIComponent(link) +
-        "&text=" +
-        encodeURIComponent(text);
+    // ==========================================
+    // ADS
+    // ==========================================
+
+    function watchAds() {
+
+        closePanels();
 
 
-    tg.openTelegramLink(
-        shareUrl
-    );
-}
+        document
+            .getElementById(
+                "adsPanel"
+            )
+            .classList
+            .remove("hidden");
+
+    }
 
 
-// ==========================================
-// WITHDRAW
-// ==========================================
+    // ==========================================
+    // HISTORY
+    // ==========================================
 
-async function requestWithdraw() {
+    async function openHistory() {
 
-    const amount =
-        Number(
+        closePanels();
+
+
+        document
+            .getElementById(
+                "historyPanel"
+            )
+            .classList
+            .remove("hidden");
+
+
+        await loadHistory();
+
+    }
+
+
+    // ==========================================
+    // WITHDRAW
+    // ==========================================
+
+    function openWithdraw() {
+
+        closePanels();
+
+
+        document
+            .getElementById(
+                "withdrawPanel"
+            )
+            .classList
+            .remove("hidden");
+
+
+        document
+            .getElementById(
+                "withdrawBalance"
+            )
+            .textContent =
+
+            Number(
+                currentUser?.balance || 0
+            ).toFixed(2);
+
+    }
+
+
+    // ==========================================
+    // COPY REFERRAL
+    // ==========================================
+
+    async function copyReferral() {
+
+        const input =
             document.getElementById(
-                "withdrawAmount"
-            ).value
-        );
+                "referralLink"
+            );
 
 
-    const wallet =
-        document.getElementById(
-            "withdrawWallet"
-        ).value.trim();
+        try {
+
+            await navigator
+                .clipboard
+                .writeText(
+                    input.value
+                );
 
 
-    if (!amount || amount <= 0) {
+            showToast(
+                "Referral link copied."
+            );
 
-        showToast(
-            "Enter a valid amount."
-        );
+        }
+        catch {
 
-        return;
+            input.select();
+
+            document.execCommand(
+                "copy"
+            );
+
+
+            showToast(
+                "Referral link copied."
+            );
+
+        }
+
     }
 
 
-    if (!wallet) {
+    // ==========================================
+    // SHARE
+    // ==========================================
 
-        showToast(
-            "Enter your wallet address."
+    function shareReferral() {
+
+        if (!currentUser) {
+            return;
+        }
+
+
+        const link =
+            document.getElementById(
+                "referralLink"
+            ).value;
+
+
+        const text =
+            "Join ADEWA Mini Bot and earn rewards!";
+
+
+        const shareUrl =
+
+            "https://t.me/share/url?url=" +
+
+            encodeURIComponent(link) +
+
+            "&text=" +
+
+            encodeURIComponent(text);
+
+
+        tg.openTelegramLink(
+            shareUrl
         );
 
-        return;
     }
 
 
-    /*
-       IMPORTANT:
+    // ==========================================
+    // HISTORY API
+    // ==========================================
 
-       We are NOT sending the withdrawal
-       yet because the backend endpoint
-       has not been created.
+    async function loadHistory() {
 
-       The backend must validate:
-       - user
-       - balance
-       - minimum amount
-       - wallet
-       - duplicate requests
-       - withdrawal status
-    */
+        if (!currentUser) {
+            return;
+        }
 
 
-    showToast(
-        "Withdrawal system is not connected yet."
-    );
-}
+        const historyList =
+            document.getElementById(
+                "historyList"
+            );
 
 
-// ==========================================
-// INITIALIZE
-// ==========================================
+        historyList.innerHTML = `
 
-loadUser();
-    </script>
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ⏳
+                </div>
+
+                <p>
+                    Loading history...
+                </p>
+
+            </div>
+
+        `;
+
+
+        try {
+
+            const response =
+                await fetch(
+
+                    API_URL +
+                    "/api/history",
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                initData:
+                                    tg.initData
+
+                            })
+
+                    }
+
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+
+                    data.error ||
+                    "Unable to load history"
+
+                );
+
+            }
+
+
+            const transactions =
+                data.transactions || [];
+
+
+            if (
+                transactions.length === 0
+            ) {
+
+                historyList.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            📜
+                        </div>
+
+                        <p>
+                            No transactions yet.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            historyList.innerHTML = "";
+
+
+            transactions.forEach(
+                transaction => {
+
+                    const amount =
+                        Number(
+                            transaction.amount || 0
+                        );
+
+
+                    const positive =
+                        amount >= 0;
+
+
+                    const div =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    div.className =
+                        "transaction";
+
+
+                    div.innerHTML = `
+
+                        <div class="transaction-icon">
+                            ${positive ? "💰" : "💸"}
+                        </div>
+
+                        <div class="transaction-content">
+
+                            <div class="transaction-title">
+                                ${escapeHtml(
+                                    transaction.description ||
+                                    transaction.type ||
+                                    "Transaction"
+                                )}
+                            </div>
+
+                            <div class="transaction-date">
+                                ${formatDate(
+                                    transaction.created_at
+                                )}
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="transaction-amount ${
+                                positive
+                                    ? "positive"
+                                    : "negative"
+                            }"
+                        >
+                            ${
+                                positive
+                                    ? "+"
+                                    : ""
+                            }${amount.toFixed(2)} Birr
+                        </div>
+
+                    `;
+
+
+                    historyList.appendChild(
+                        div
+                    );
+
+                }
+            );
+
+
+        }
+        catch (error) {
+
+            console.error(error);
+
+
+            historyList.innerHTML = `
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ⚠️
+                    </div>
+
+                    <p>
+                        History is not connected yet.
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // DATE
+    // ==========================================
+
+    function formatDate(timestamp) {
+
+        if (!timestamp) {
+            return "";
+        }
+
+
+        try {
+
+            return new Date(
+                Number(timestamp) * 1000
+            ).toLocaleString();
+
+        }
+        catch {
+
+            return "";
+
+        }
+
+    }
+
+
+    // ==========================================
+    // ESCAPE HTML
+    // ==========================================
+
+    function escapeHtml(value) {
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    // ==========================================
+    // WITHDRAW
+    // ==========================================
+
+    async function requestWithdraw() {
+
+        const amount =
+            Number(
+                document.getElementById(
+                    "withdrawAmount"
+                ).value
+            );
+
+
+        const wallet =
+            document.getElementById(
+                "withdrawWallet"
+            ).value.trim();
+
+
+        if (!amount || amount <= 0) {
+
+            showToast(
+                "Enter a valid amount."
+            );
+
+            return;
+
+        }
+
+
+        if (!wallet) {
+
+            showToast(
+                "Enter your wallet address."
+            );
+
+            return;
+
+        }
+
+
+        /*
+            IMPORTANT:
+
+            The withdrawal endpoint is
+            not connected yet.
+
+            Never change balance from
+            JavaScript.
+
+            The server must verify:
+
+            - Telegram user
+            - balance
+            - minimum withdrawal
+            - wallet
+            - duplicate request
+            - withdrawal status
+        */
+
+
+        showToast(
+            "Withdrawal system is not connected yet."
+        );
+
+    }
+
+
+    // ==========================================
+    // INITIALIZE
+    // ==========================================
+
+    loadUser();
+
+</script>
 
 </body>
-                                  </html>
+
+    </html>
