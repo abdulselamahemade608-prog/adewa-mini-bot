@@ -432,7 +432,6 @@
 
 </div>
 
-
 <script>
 
     // ==========================================
@@ -446,11 +445,22 @@
 
 
     // ==========================================
-    // GET TELEGRAM USER
+    // BACKEND API
+    // ==========================================
+
+    const API_URL = "https://YOUR-VERCEL-DOMAIN.vercel.app";
+
+
+    // ==========================================
+    // TELEGRAM USER
     // ==========================================
 
     const user = tg.initDataUnsafe?.user;
 
+
+    // ==========================================
+    // DISPLAY USER
+    // ==========================================
 
     if (user) {
 
@@ -468,13 +478,137 @@
 
 
     // ==========================================
+    // LOAD USER FROM BACKEND
+    // ==========================================
+
+    async function loadUser() {
+
+        try {
+
+            // Telegram must provide initData.
+            if (!tg.initData) {
+
+                tg.showAlert(
+                    "Please open this Mini App from Telegram."
+                );
+
+                return;
+            }
+
+
+            const response = await fetch(
+                API_URL + "/api/me",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        initData: tg.initData
+                    })
+                }
+            );
+
+
+            const data = await response.json();
+
+
+            // ======================================
+            // BACKEND ERROR
+            // ======================================
+
+            if (!response.ok || !data.success) {
+
+                console.error(
+                    "Backend error:",
+                    data
+                );
+
+                tg.showAlert(
+                    data.error ||
+                    "Unable to load your account."
+                );
+
+                return;
+            }
+
+
+            // ======================================
+            // USER DATA
+            // ======================================
+
+            const account = data.user;
+
+
+            // ======================================
+            // BALANCE
+            // ======================================
+
+            document.getElementById("balance").textContent =
+                Number(account.balance).toFixed(2);
+
+
+            // ======================================
+            // REFERRALS
+            // ======================================
+
+            document.getElementById("referrals").textContent =
+                account.referral_count;
+
+
+            // ======================================
+            // TASKS
+            // ======================================
+
+            document.getElementById("tasks").textContent =
+                account.tasks_completed;
+
+
+            // ======================================
+            // NAME
+            // ======================================
+
+            if (account.first_name) {
+
+                document.getElementById("userName").textContent =
+                    account.first_name;
+
+                document.getElementById("avatar").textContent =
+                    account.first_name
+                        .charAt(0)
+                        .toUpperCase();
+            }
+
+
+            console.log(
+                "Account loaded:",
+                account
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Connection error:",
+                error
+            );
+
+            tg.showAlert(
+                "Could not connect to the server."
+            );
+        }
+    }
+
+
+    // ==========================================
     // WATCH ADS
     // ==========================================
 
     function watchAds() {
 
         tg.showAlert(
-            "Ads system will be connected in the next step."
+            "Ads system will be connected next."
         );
     }
 
@@ -486,18 +620,16 @@
     function openTasks() {
 
         tg.showAlert(
-            "Task system will be connected in the next step."
+            "Task system will be connected next."
         );
     }
 
 
     // ==========================================
-    // INVITE
+    // INVITE FRIENDS
     // ==========================================
 
     function inviteFriends() {
-
-        const botUsername = "M_r_work2bot";
 
         if (!user) {
 
@@ -508,16 +640,23 @@
             return;
         }
 
+
         const referralLink =
-            "https://t.me/" +
-            botUsername +
-            "?start=ref_" +
+            "https://t.me/M_r_work2bot?start=ref_" +
             user.id;
 
-        tg.showAlert(
-            "Your referral link:\n\n" +
-            referralLink
-        );
+
+        // Telegram share dialog
+        const shareUrl =
+            "https://t.me/share/url?url=" +
+            encodeURIComponent(referralLink) +
+            "&text=" +
+            encodeURIComponent(
+                "Join ADEWA Mini Bot and start earning!"
+            );
+
+
+        tg.openTelegramLink(shareUrl);
     }
 
 
@@ -528,7 +667,7 @@
     function openHistory() {
 
         tg.showAlert(
-            "Transaction history will be connected in the next step."
+            "Transaction history will be connected next."
         );
     }
 
@@ -540,9 +679,16 @@
     function withdraw() {
 
         tg.showAlert(
-            "Withdrawal system will be connected after the backend is ready."
+            "Withdrawal system will be connected next."
         );
     }
+
+
+    // ==========================================
+    // START
+    // ==========================================
+
+    loadUser();
 
 </script>
 
