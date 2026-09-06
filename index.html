@@ -1,271 +1,509 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0, user-scalable=no">
 
-    <meta charset="UTF-8">
+<title>ADEWA Mini Bot</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <title>ADEWA Mini Bot</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+body {
+    background: #f4f7fb;
+    color: #172033;
+    padding-bottom: 85px;
+}
 
-    <style>
+.header {
+    background: linear-gradient(135deg, #1877f2, #0d5dcc);
+    color: white;
+    padding: 25px 20px;
+    border-radius: 0 0 25px 25px;
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+.header h2 {
+    font-size: 23px;
+    margin-bottom: 5px;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #172033;
-            min-height: 100vh;
-        }
+.header p {
+    opacity: .9;
+    font-size: 14px;
+}
 
-        .container {
-            width: 100%;
-            max-width: 520px;
-            margin: auto;
-            padding: 18px;
-        }
+.container {
+    padding: 15px;
+}
 
-        .header {
-            background: #1877f2;
-            color: white;
-            border-radius: 20px;
-            padding: 24px 20px;
-            margin-bottom: 16px;
-        }
+.balance-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    margin-top: -5px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.07);
+}
 
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 7px;
-        }
+.balance-title {
+    color: #687386;
+    font-size: 14px;
+}
 
-        .header p {
-            opacity: .9;
-            font-size: 14px;
-        }
+.balance {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1877f2;
+    margin-top: 5px;
+}
 
-        .balance-card {
-            background: white;
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,.06);
-        }
+.currency {
+    font-size: 16px;
+}
 
-        .balance-title {
-            font-size: 14px;
-            color: #687386;
-            margin-bottom: 8px;
-        }
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
 
-        .balance {
-            font-size: 34px;
-            font-weight: bold;
-            color: #1877f2;
-        }
+.stat {
+    background: white;
+    border-radius: 15px;
+    padding: 15px 8px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,.05);
+}
 
-        .birr {
-            font-size: 17px;
-            margin-left: 4px;
-        }
+.stat-number {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1877f2;
+}
 
-        .stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
+.stat-label {
+    font-size: 11px;
+    color: #737d8d;
+    margin-top: 4px;
+}
 
-        .stat {
-            background: white;
-            border-radius: 18px;
-            padding: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,.05);
-        }
+.section {
+    margin-top: 20px;
+}
 
-        .stat-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #1877f2;
-        }
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
 
-        .stat-label {
-            color: #687386;
-            font-size: 13px;
-            margin-top: 5px;
-        }
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.05);
+}
 
-        .actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+button {
+    width: 100%;
+    border: none;
+    padding: 13px;
+    border-radius: 12px;
+    background: #1877f2;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        button {
-            border: none;
-            border-radius: 17px;
-            padding: 17px 10px;
-            font-size: 15px;
-            font-weight: bold;
-            background: white;
-            color: #172033;
-            box-shadow: 0 4px 15px rgba(0,0,0,.05);
-            cursor: pointer;
-        }
+button:active {
+    transform: scale(.98);
+}
 
-        button:active {
-            transform: scale(.98);
-        }
+.secondary {
+    background: #eef5ff;
+    color: #1877f2;
+}
 
-        .primary {
-            background: #1877f2;
-            color: white;
-        }
+.success {
+    background: #168a4a;
+}
 
-        .panel {
-            display: none;
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,.05);
-        }
+.warning {
+    background: #e69a00;
+}
 
-        .panel h2 {
-            font-size: 19px;
-            margin-bottom: 12px;
-        }
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #edf0f4;
+}
 
-        .ref-link {
-            background: #f0f4f9;
-            padding: 13px;
-            border-radius: 12px;
-            font-size: 12px;
-            word-break: break-all;
-            margin: 12px 0;
-        }
+.history-item:last-child {
+    border-bottom: none;
+}
 
-        .history-item {
-            padding: 13px 0;
-            border-bottom: 1px solid #edf0f4;
-        }
+.history-left {
+    max-width: 70%;
+}
 
-        .history-item:last-child {
-            border-bottom: none;
-        }
+.history-type {
+    font-weight: bold;
+    font-size: 14px;
+}
 
-        .history-type {
-            font-weight: bold;
-        }
+.history-description {
+    color: #7b8492;
+    font-size: 12px;
+    margin-top: 3px;
+}
 
-        .history-amount {
-            color: #1877f2;
-            font-weight: bold;
-            margin-top: 4px;
-        }
+.history-amount {
+    font-weight: bold;
+}
 
-        .small {
-            color: #687386;
-            font-size: 12px;
-            margin-top: 4px;
-        }
+.plus {
+    color: #168a4a;
+}
 
-        .status {
-            text-align: center;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-radius: 12px;
-            background: #eaf3ff;
-            color: #1877f2;
-            display: none;
-        }
+.minus {
+    color: #d83a3a;
+}
 
-    </style>
+.referral-box {
+    background: #eef5ff;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 12px;
+    word-break: break-all;
+    margin: 10px 0;
+}
 
+.loading {
+    text-align: center;
+    padding: 35px;
+    color: #687386;
+}
+
+.error {
+    background: #ffecec;
+    color: #c62828;
+    padding: 14px;
+    border-radius: 12px;
+    margin: 15px;
+    display: none;
+}
+
+.empty {
+    text-align: center;
+    color: #8993a2;
+    padding: 20px 5px;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e5e8ed;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 8px 5px;
+    z-index: 100;
+}
+
+.nav-btn {
+    background: transparent;
+    color: #687386;
+    padding: 7px 2px;
+    font-size: 11px;
+    font-weight: normal;
+}
+
+.nav-btn.active {
+    color: #1877f2;
+}
+
+.panel {
+    display: none;
+}
+
+.panel.active {
+    display: block;
+}
+
+.status {
+    font-size: 13px;
+    margin-top: 8px;
+    color: #687386;
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<div id="loading" class="loading">
+    Loading ADEWA...
+</div>
 
-    <div id="status" class="status"></div>
+<div id="errorBox" class="error"></div>
 
+<div id="app" style="display:none;">
+
+    <!-- HEADER -->
     <div class="header">
-
-        <h1 id="welcome">
-            Welcome 👋
-        </h1>
-
-        <p>
-            ADEWA Mini Bot
-        </p>
-
+        <h2>🚀 ADEWA Mini Bot</h2>
+        <p id="welcomeText">Welcome!</p>
     </div>
 
+    <div class="container">
 
-    <!-- BALANCE -->
+        <!-- BALANCE -->
+        <div class="balance-card">
 
-    <div class="balance-card">
-
-        <div class="balance-title">
-            Your Balance
-        </div>
-
-        <div class="balance">
-
-            <span id="balance">
-                0.00
-            </span>
-
-            <span class="birr">
-                Birr
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <!-- STATS -->
-
-    <div class="stats">
-
-        <div class="stat">
-
-            <div
-                class="stat-number"
-                id="referrals"
-            >
-                0
+            <div class="balance-title">
+                💰 Available Balance
             </div>
 
-            <div class="stat-label">
-                Referrals
+            <div class="balance">
+                <span id="balance">0.00</span>
+                <span class="currency">Birr</span>
             </div>
 
         </div>
 
+        <!-- STATS -->
+        <div class="stats">
 
-        <div class="stat">
-
-            <div
-                class="stat-number"
-                id="tasks"
-            >
-                0
+            <div class="stat">
+                <div class="stat-number" id="referrals">
+                    0
+                </div>
+                <div class="stat-label">
+                    Referrals
+                </div>
             </div>
 
-            <div class="stat-label">
-                Tasks
+            <div class="stat">
+                <div class="stat-number" id="tasks">
+                    0
+                </div>
+                <div class="stat-label">
+                    Tasks
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-number" id="verified">
+                    ❌
+                </div>
+                <div class="stat-label">
+                    Status
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- HOME -->
+        <div id="homePanel" class="panel active">
+
+            <div class="section">
+
+                <div class="section-title">
+                    👋 Account
+                </div>
+
+                <div class="card">
+
+                    <b id="userName">
+                        User
+                    </b>
+
+                    <div class="status" id="accountStatus">
+                        Checking account...
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="section">
+
+                <div class="section-title">
+                    🎁 Referral Program
+                </div>
+
+                <div class="card">
+
+                    <p>
+                        Invite friends and earn
+                        <b>1 Birr</b> for each
+                        qualified referral.
+                    </p>
+
+                    <div class="referral-box"
+                         id="referralLink">
+                        Loading...
+                    </div>
+
+                    <button onclick="copyReferral()">
+                        📋 Copy Referral Link
+                    </button>
+
+                    <br><br>
+
+                    <button class="secondary"
+                            onclick="shareReferral()">
+                        📤 Invite Friends
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADS -->
+        <div id="adsPanel" class="panel">
+
+            <div class="section">
+
+                <div class="section-title">
+                    📺 Earn From Ads
+                </div>
+
+                <div class="card">
+
+                    <p>
+                        Watch available advertisements
+                        to earn rewards.
+                    </p>
+
+                    <br>
+
+                    <button onclick="showAd()">
+                        ▶️ Watch Ad
+                    </button>
+
+                    <div class="status"
+                         id="adStatus">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TASKS -->
+        <div id="tasksPanel" class="panel">
+
+            <div class="section">
+
+                <div class="section-title">
+                    📝 Tasks
+                </div>
+
+                <div class="card">
+
+                    <p>
+                        Complete available tasks
+                        and earn rewards.
+                    </p>
+
+                    <br>
+
+                    <button onclick="loadTasks()">
+                        🔄 Refresh Tasks
+                    </button>
+
+                    <div id="taskList"
+                         style="margin-top:15px;">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HISTORY -->
+        <div id="historyPanel" class="panel">
+
+            <div class="section">
+
+                <div class="section-title">
+                    📜 Transaction History
+                </div>
+
+                <div class="card"
+                     id="historyList">
+
+                    <div class="empty">
+                        Loading history...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WITHDRAW -->
+        <div id="withdrawPanel" class="panel">
+
+            <div class="section">
+
+                <div class="section-title">
+                    💸 Withdraw
+                </div>
+
+                <div class="card">
+
+                    <p>
+                        Your available balance:
+                    </p>
+
+                    <br>
+
+                    <b style="font-size:25px;color:#1877f2;">
+                        <span id="withdrawBalance">
+                            0.00
+                        </span>
+                        Birr
+                    </b>
+
+                    <br><br>
+
+                    <button onclick="withdraw()">
+                        💸 Request Withdrawal
+                    </button>
+
+                    <div class="status"
+                         id="withdrawStatus">
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
@@ -273,167 +511,33 @@
     </div>
 
 
-    <!-- ACTIONS -->
+    <!-- NAVIGATION -->
+    <div class="bottom-nav">
 
-    <div class="actions">
-
-        <button
-            class="primary"
-            onclick="showPanel('ads')"
-        >
-            🎬 Watch Ads
+        <button class="nav-btn active"
+                onclick="openPanel('homePanel', this)">
+            🏠<br>Home
         </button>
 
-        <button
-            onclick="showPanel('tasks')"
-        >
-            📋 Tasks
+        <button class="nav-btn"
+                onclick="openPanel('adsPanel', this)">
+            📺<br>Ads
         </button>
 
-        <button
-            onclick="showPanel('referral')"
-        >
-            👥 Invite Friends
+        <button class="nav-btn"
+                onclick="openPanel('tasksPanel', this)">
+            📝<br>Tasks
         </button>
 
-        <button
-            onclick="loadHistory()"
-        >
-            📜 History
+        <button class="nav-btn"
+                onclick="openPanel('historyPanel', this)">
+            📜<br>History
         </button>
 
-        <button
-            onclick="showPanel('withdraw')"
-        >
-            💸 Withdraw
+        <button class="nav-btn"
+                onclick="openPanel('withdrawPanel', this)">
+            💸<br>Withdraw
         </button>
-
-        <button
-            onclick="refreshUser()"
-        >
-            🔄 Refresh
-        </button>
-
-    </div>
-
-
-    <!-- ADS -->
-
-    <div
-        id="ads"
-        class="panel"
-    >
-
-        <h2>
-            🎬 Watch Ads
-        </h2>
-
-        <p>
-            Ads system will be connected here.
-        </p>
-
-    </div>
-
-
-    <!-- TASKS -->
-
-    <div
-        id="tasks"
-        class="panel"
-    >
-
-        <h2>
-            📋 Tasks
-        </h2>
-
-        <p>
-            Available tasks will appear here.
-        </p>
-
-    </div>
-
-
-    <!-- REFERRAL -->
-
-    <div
-        id="referral"
-        class="panel"
-    >
-
-        <h2>
-            👥 Invite Friends
-        </h2>
-
-        <p>
-            Invite friends and earn
-            <b>1 Birr</b>
-            for each qualified referral.
-        </p>
-
-        <div
-            id="refLink"
-            class="ref-link"
-        >
-            Loading...
-        </div>
-
-        <button
-            class="primary"
-            onclick="copyReferral()"
-        >
-            📋 Copy Referral Link
-        </button>
-
-        <br><br>
-
-        <button
-            onclick="shareReferral()"
-        >
-            📤 Share
-        </button>
-
-    </div>
-
-
-    <!-- HISTORY -->
-
-    <div
-        id="history"
-        class="panel"
-    >
-
-        <h2>
-            📜 Transaction History
-        </h2>
-
-        <div id="historyList">
-            Loading...
-        </div>
-
-    </div>
-
-
-    <!-- WITHDRAW -->
-
-    <div
-        id="withdraw"
-        class="panel"
-    >
-
-        <h2>
-            💸 Withdraw
-        </h2>
-
-        <p>
-            Withdrawal system will be connected next.
-        </p>
-
-        <br>
-
-        <p class="small">
-            Minimum withdrawal requirements
-            will be added here.
-        </p>
 
     </div>
 
@@ -442,124 +546,192 @@
 
 <script>
 
-    // =====================================================
-    // TELEGRAM
-    // =====================================================
+const tg = window.Telegram.WebApp;
 
-    const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
 
-    tg.ready();
+const API_URL =
+    "https://adewa-mini-backend.vercel.app";
 
-    tg.expand();
+const initData = tg.initData;
 
-
-    // =====================================================
-    // BACKEND
-    // =====================================================
-
-    const API_URL =
-        "https://adewa-mini-backend.vercel.app";
+let currentUser = null;
 
 
-    // =====================================================
-    // INIT DATA
-    // =====================================================
+/* ==========================================
+   TELEGRAM USER
+========================================== */
 
-    const initData =
-        tg.initData;
-
-
-    // =====================================================
-    // TELEGRAM USER
-    // =====================================================
-
-    const telegramUser =
-        tg.initDataUnsafe &&
-        tg.initDataUnsafe.user
-            ? tg.initDataUnsafe.user
-            : null;
+const telegramUser =
+    tg.initDataUnsafe &&
+    tg.initDataUnsafe.user
+        ? tg.initDataUnsafe.user
+        : null;
 
 
-    // =====================================================
-    // STATUS
-    // =====================================================
+/* ==========================================
+   SHOW ERROR
+========================================== */
 
-    function showStatus(text) {
+function showError(message) {
 
-        const box =
-            document.getElementById("status");
+    document.getElementById(
+        "loading"
+    ).style.display = "none";
 
-        box.innerText = text;
+    const box =
+        document.getElementById("errorBox");
 
-        box.style.display = "block";
-
-    }
-
-
-    function hideStatus() {
-
-        document.getElementById(
-            "status"
-        ).style.display = "none";
-
-    }
+    box.innerText = message;
+    box.style.display = "block";
+}
 
 
-    // =====================================================
-    // PANELS
-    // =====================================================
+/* ==========================================
+   LOAD USER
+========================================== */
 
-    function hidePanels() {
+async function loadUser() {
 
-        document
-            .querySelectorAll(".panel")
-            .forEach(function(panel) {
-
-                panel.style.display = "none";
-
-            });
-
-    }
-
-
-    function showPanel(id) {
-
-        hidePanels();
-
-        const panel =
-            document.getElementById(id);
-
-        if (panel) {
-
-            panel.style.display = "block";
-
-        }
-
-    }
-
-
-    // =====================================================
-    // FORMAT MONEY
-    // =====================================================
-
-    function formatMoney(value) {
-
-        return Number(value || 0)
-            .toFixed(2);
-
-    }
-
-
-    // =====================================================
-    // LOAD USER
-    // =====================================================
-
-    async function loadUser() {
+    try {
 
         if (!initData) {
 
-            showStatus(
-                "⚠️ Please open this Mini App from Telegram."
+            throw new Error(
+                "Telegram authentication data is missing."
+            );
+
+        }
+
+
+        const response = await fetch(
+            API_URL + "/api/me",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    initData: initData
+                })
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok ||
+            !data.success) {
+
+            throw new Error(
+                data.error ||
+                "Failed to load account."
+            );
+
+        }
+
+
+        currentUser =
+            data.user;
+
+
+        updateUserUI(
+            currentUser
+        );
+
+
+        /*
+         ======================================
+         SECURE VERIFICATION + REFERRAL
+         ======================================
+
+         IMPORTANT:
+
+         No BOT_API_SECRET is sent
+         from this browser.
+
+         Backend authenticates the user
+         using Telegram initData.
+
+         Backend then:
+         1. Checks Telegram membership
+         2. Sets verified = true
+         3. Finds referral
+         4. Rewards inviter +1 Birr
+         5. Prevents duplicate reward
+        */
+
+        await verifyAndQualify();
+
+
+        /*
+         Reload user after verification
+         and possible referral reward.
+        */
+
+        await refreshUser();
+
+
+        await loadHistory();
+
+    }
+    catch (error) {
+
+        console.error(
+            "Load user error:",
+            error
+        );
+
+        showError(
+            error.message ||
+            "Something went wrong."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   SECURE VERIFY + QUALIFY
+========================================== */
+
+async function verifyAndQualify() {
+
+    try {
+
+        const response = await fetch(
+            API_URL + "/api/verify-and-qualify",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    initData: initData
+                })
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            console.log(
+                "Verification response:",
+                data
             );
 
             return;
@@ -567,454 +739,546 @@
         }
 
 
-        try {
+        if (data.success) {
 
-            showStatus(
-                "⏳ Loading your account..."
+            console.log(
+                "Secure verification:",
+                data
             );
 
 
-            const response =
-                await fetch(
-                    API_URL + "/api/me",
-                    {
+            if (data.referral_rewarded) {
 
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body: JSON.stringify({
-
-                            initData:
-                                initData
-
-                        })
-
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            if (!response.ok || !data.success) {
-
-                throw new Error(
-                    data.error ||
-                    "Failed to load account"
+                console.log(
+                    "Referral rewarded:",
+                    data.reward
                 );
 
             }
 
+        }
+
+    }
+    catch (error) {
+
+        /*
+         Do not break the Mini App
+         if verification endpoint
+         temporarily fails.
+        */
+
+        console.log(
+            "verifyAndQualify:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   REFRESH USER
+========================================== */
+
+async function refreshUser() {
+
+    try {
+
+        const response = await fetch(
+            API_URL + "/api/me",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    initData: initData
+                })
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (data.success) {
+
+            currentUser =
+                data.user;
 
             updateUserUI(
-                data.user
-            );
-
-
-            hideStatus();
-
-
-            // ---------------------------------------------
-            // QUALIFY REFERRAL
-            // ---------------------------------------------
-
-            await qualifyReferral(
-                data.user.telegram_id
-            );
-
-
-        } catch (error) {
-
-            showStatus(
-                "❌ " + error.message
+                currentUser
             );
 
         }
 
     }
+    catch (error) {
 
-
-    // =====================================================
-    // UPDATE UI
-    // =====================================================
-
-    function updateUserUI(user) {
-
-        let name =
-            user.first_name ||
-            "User";
-
-
-        document.getElementById(
-            "welcome"
-        ).innerText =
-            "Welcome, " + name + " 👋";
-
-
-        document.getElementById(
-            "balance"
-        ).innerText =
-            formatMoney(
-                user.balance
-            );
-
-
-        document.getElementById(
-            "referrals"
-        ).innerText =
-            user.referral_count || 0;
-
-
-        document.getElementById(
-            "tasks"
-        ).innerText =
-            user.tasks_completed || 0;
-
-
-        updateReferralLink(
-            user.telegram_id
+        console.log(
+            "Refresh user error:",
+            error
         );
 
     }
 
+}
 
-    // =====================================================
-    // REFERRAL LINK
-    // =====================================================
 
-    function updateReferralLink(
-        telegramId
-    ) {
+/* ==========================================
+   UPDATE UI
+========================================== */
+
+function updateUserUI(user) {
+
+    const firstName =
+        user.first_name ||
+        "User";
+
+    const lastName =
+        user.last_name ||
+        "";
+
+    document.getElementById(
+        "welcomeText"
+    ).innerText =
+        "Welcome, " +
+        firstName +
+        "!";
+
+
+    document.getElementById(
+        "userName"
+    ).innerText =
+        (firstName + " " + lastName)
+        .trim();
+
+
+    document.getElementById(
+        "balance"
+    ).innerText =
+        Number(
+            user.balance || 0
+        ).toFixed(2);
+
+
+    document.getElementById(
+        "withdrawBalance"
+    ).innerText =
+        Number(
+            user.balance || 0
+        ).toFixed(2);
+
+
+    document.getElementById(
+        "referrals"
+    ).innerText =
+        user.referral_count || 0;
+
+
+    document.getElementById(
+        "tasks"
+    ).innerText =
+        user.tasks_completed || 0;
+
+
+    document.getElementById(
+        "verified"
+    ).innerText =
+        user.verified
+            ? "✅"
+            : "❌";
+
+
+    document.getElementById(
+        "accountStatus"
+    ).innerText =
+        user.verified
+            ? "✅ Account verified"
+            : "⏳ Verification pending";
+
+
+    /*
+     ======================================
+     REFERRAL LINK
+     ======================================
+    */
+
+    if (user.telegram_id) {
 
         const link =
-            "https://t.me/M_r_work2bot?start=ref_"
-            + telegramId;
-
+            "https://t.me/M_r_work2bot" +
+            "?start=ref_" +
+            user.telegram_id;
 
         document.getElementById(
-            "refLink"
+            "referralLink"
         ).innerText =
             link;
 
     }
 
 
-    // =====================================================
-    // QUALIFY REFERRAL
-    // =====================================================
+    document.getElementById(
+        "loading"
+    ).style.display =
+        "none";
 
-    async function qualifyReferral(
-        userId
-    ) {
 
-        try {
+    document.getElementById(
+        "app"
+    ).style.display =
+        "block";
 
-            /*
-             * The current backend endpoint is
-             * protected by BOT_API_SECRET.
-             *
-             * Therefore we do not send a secret
-             * from the browser.
-             *
-             * This function is kept ready for
-             * the authenticated referral endpoint.
-             */
+}
 
-            console.log(
-                "Referral qualification requested for:",
-                userId
-            );
 
-        } catch (error) {
+/* ==========================================
+   COPY REFERRAL
+========================================== */
 
-            console.log(
-                "Referral qualification error:",
-                error
-            );
+async function copyReferral() {
 
-        }
+    const text =
+        document.getElementById(
+            "referralLink"
+        ).innerText;
+
+    try {
+
+        await navigator.clipboard.writeText(
+            text
+        );
+
+        tg.showPopup({
+            title: "Copied",
+            message:
+                "Referral link copied.",
+            buttons: [
+                {
+                    type: "ok"
+                }
+            ]
+        });
+
+    }
+    catch (error) {
+
+        alert(text);
 
     }
 
-
-    // =====================================================
-    // REFRESH
-    // =====================================================
-
-    async function refreshUser() {
-
-        await loadUser();
-
-    }
+}
 
 
-    // =====================================================
-    // HISTORY
-    // =====================================================
+/* ==========================================
+   SHARE REFERRAL
+========================================== */
 
-    async function loadHistory() {
+function shareReferral() {
 
-        showPanel(
-            "history"
+    const text =
+        "🚀 Join ADEWA Mini Bot and earn rewards!";
+
+    const link =
+        document.getElementById(
+            "referralLink"
+        ).innerText;
+
+
+    const shareUrl =
+        "https://t.me/share/url" +
+        "?url=" +
+        encodeURIComponent(link) +
+        "&text=" +
+        encodeURIComponent(text);
+
+
+    tg.openTelegramLink(
+        shareUrl
+    );
+
+}
+
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+function openPanel(
+    panelId,
+    button
+) {
+
+    document
+        .querySelectorAll(".panel")
+        .forEach(
+            panel =>
+                panel.classList.remove(
+                    "active"
+                )
         );
 
 
-        if (!initData) {
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(
+            btn =>
+                btn.classList.remove(
+                    "active"
+                )
+        );
 
-            document.getElementById(
-                "historyList"
-            ).innerText =
-                "Please open the Mini App from Telegram.";
+
+    document
+        .getElementById(panelId)
+        .classList.add("active");
+
+
+    button.classList.add("active");
+
+
+    if (panelId === "historyPanel") {
+
+        loadHistory();
+
+    }
+
+}
+
+
+/* ==========================================
+   HISTORY
+========================================== */
+
+async function loadHistory() {
+
+    const box =
+        document.getElementById(
+            "historyList"
+        );
+
+
+    box.innerHTML =
+        '<div class="empty">Loading...</div>';
+
+
+    try {
+
+        const response = await fetch(
+            API_URL + "/api/history",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    initData: initData
+                })
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            box.innerHTML =
+                '<div class="empty">' +
+                "No history available." +
+                "</div>";
 
             return;
 
         }
 
 
-        const list =
-            document.getElementById(
-                "historyList"
-            );
+        const transactions =
+            data.transactions || [];
 
 
-        list.innerText =
-            "Loading...";
+        if (!transactions.length) {
+
+            box.innerHTML =
+                '<div class="empty">' +
+                "No transactions yet." +
+                "</div>";
+
+            return;
+
+        }
 
 
-        try {
-
-            const response =
-                await fetch(
-                    API_URL + "/api/history",
-                    {
-
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body: JSON.stringify({
-
-                            initData:
-                                initData
-
-                        })
-
-                    }
-                );
+        box.innerHTML = "";
 
 
-            const data =
-                await response.json();
+        transactions.forEach(
+            transaction => {
 
-
-            if (!response.ok || !data.success) {
-
-                throw new Error(
-                    data.error ||
-                    "Failed to load history"
-                );
-
-            }
-
-
-            if (!data.history.length) {
-
-                list.innerText =
-                    "No transactions yet.";
-
-                return;
-
-            }
-
-
-            list.innerHTML = "";
-
-
-            data.history.forEach(
-                function(item) {
-
-                    const div =
-                        document.createElement(
-                            "div"
-                        );
-
-                    div.className =
-                        "history-item";
-
-
-                    div.innerHTML =
-
-                        "<div class='history-type'>"
-                        + escapeHtml(
-                            item.type
-                        )
-                        + "</div>"
-
-                        +
-
-                        "<div class='history-amount'>"
-                        + (
-                            Number(item.amount) >= 0
-                                ? "+"
-                                : ""
-                        )
-                        + formatMoney(
-                            item.amount
-                        )
-                        + " Birr"
-                        + "</div>"
-
-                        +
-
-                        "<div class='small'>"
-                        + escapeHtml(
-                            item.description || ""
-                        )
-                        + "</div>";
-
-
-                    list.appendChild(
-                        div
+                const amount =
+                    Number(
+                        transaction.amount || 0
                     );
 
-                }
-            );
+
+                const positive =
+                    amount >= 0;
 
 
-        } catch (error) {
+                const item =
+                    document.createElement(
+                        "div"
+                    );
 
-            list.innerText =
-                "❌ " + error.message;
-
-        }
-
-    }
-
-
-    // =====================================================
-    // COPY REFERRAL
-    // =====================================================
-
-    async function copyReferral() {
-
-        const link =
-            document.getElementById(
-                "refLink"
-            ).innerText;
+                item.className =
+                    "history-item";
 
 
-        try {
+                item.innerHTML =
 
-            await navigator.clipboard.writeText(
-                link
-            );
+                    '<div class="history-left">' +
 
-            showStatus(
-                "✅ Referral link copied!"
-            );
+                        '<div class="history-type">' +
+                            escapeHtml(
+                                transaction.type ||
+                                "Transaction"
+                            ) +
+                        '</div>' +
 
-            setTimeout(
-                hideStatus,
-                2000
-            );
+                        '<div class="history-description">' +
+                            escapeHtml(
+                                transaction.description ||
+                                ""
+                            ) +
+                        '</div>' +
 
-        } catch {
+                    '</div>' +
 
-            showStatus(
-                "❌ Could not copy the link."
-            );
+                    '<div class="history-amount ' +
+                        (
+                            positive
+                                ? "plus"
+                                : "minus"
+                        ) +
+                    '">' +
 
-        }
+                        (
+                            positive
+                                ? "+"
+                                : ""
+                        ) +
 
-    }
+                        amount.toFixed(2) +
 
-
-    // =====================================================
-    // SHARE REFERRAL
-    // =====================================================
-
-    function shareReferral() {
-
-        const link =
-            document.getElementById(
-                "refLink"
-            ).innerText;
-
-
-        const text =
-            "Join ADEWA Mini Bot and earn rewards!";
+                    ' Birr</div>';
 
 
-        const shareUrl =
-            "https://t.me/share/url?url="
-            + encodeURIComponent(link)
-            + "&text="
-            + encodeURIComponent(text);
+                box.appendChild(
+                    item
+                );
 
-
-        tg.openTelegramLink(
-            shareUrl
+            }
         );
 
     }
+    catch (error) {
 
-
-    // =====================================================
-    // ESCAPE HTML
-    // =====================================================
-
-    function escapeHtml(value) {
-
-        return String(value || "")
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-
-    }
-
-
-    // =====================================================
-    // START
-    // =====================================================
-
-    if (telegramUser) {
-
-        loadUser();
-
-    } else {
-
-        showStatus(
-            "⚠️ Open ADEWA Mini Bot from Telegram."
+        console.log(
+            "History error:",
+            error
         );
 
+        box.innerHTML =
+            '<div class="empty">' +
+            "Could not load history." +
+            "</div>";
+
     }
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text == null
+            ? ""
+            : String(text);
+
+    return div.innerHTML;
+
+}
+
+
+/* ==========================================
+   ADS
+========================================== */
+
+function showAd() {
+
+    document.getElementById(
+        "adStatus"
+    ).innerText =
+        "Ads system will be connected next.";
+
+}
+
+
+/* ==========================================
+   TASKS
+========================================== */
+
+function loadTasks() {
+
+    document.getElementById(
+        "taskList"
+    ).innerHTML =
+
+        '<div class="empty">' +
+        "Task system will be connected next." +
+        "</div>";
+
+}
+
+
+/* ==========================================
+   WITHDRAW
+========================================== */
+
+function withdraw() {
+
+    document.getElementById(
+        "withdrawStatus"
+    ).innerText =
+        "Withdrawal system will be connected next.";
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
+loadUser();
 
 </script>
 
 </body>
-</html>
+                        </html>
