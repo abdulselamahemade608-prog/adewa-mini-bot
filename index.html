@@ -1,1 +1,1020 @@
-<h1>abdu</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ADEWA Mini Bot</title>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+            margin: auto;
+            padding: 18px;
+        }
+
+        .header {
+            background: #1877f2;
+            color: white;
+            border-radius: 20px;
+            padding: 24px 20px;
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 7px;
+        }
+
+        .header p {
+            opacity: .9;
+            font-size: 14px;
+        }
+
+        .balance-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.06);
+        }
+
+        .balance-title {
+            font-size: 14px;
+            color: #687386;
+            margin-bottom: 8px;
+        }
+
+        .balance {
+            font-size: 34px;
+            font-weight: bold;
+            color: #1877f2;
+        }
+
+        .birr {
+            font-size: 17px;
+            margin-left: 4px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stat {
+            background: white;
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.05);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1877f2;
+        }
+
+        .stat-label {
+            color: #687386;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        button {
+            border: none;
+            border-radius: 17px;
+            padding: 17px 10px;
+            font-size: 15px;
+            font-weight: bold;
+            background: white;
+            color: #172033;
+            box-shadow: 0 4px 15px rgba(0,0,0,.05);
+            cursor: pointer;
+        }
+
+        button:active {
+            transform: scale(.98);
+        }
+
+        .primary {
+            background: #1877f2;
+            color: white;
+        }
+
+        .panel {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.05);
+        }
+
+        .panel h2 {
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .ref-link {
+            background: #f0f4f9;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 12px 0;
+        }
+
+        .history-item {
+            padding: 13px 0;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-type {
+            font-weight: bold;
+        }
+
+        .history-amount {
+            color: #1877f2;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .small {
+            color: #687386;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .status {
+            text-align: center;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            background: #eaf3ff;
+            color: #1877f2;
+            display: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="status" class="status"></div>
+
+    <div class="header">
+
+        <h1 id="welcome">
+            Welcome 👋
+        </h1>
+
+        <p>
+            ADEWA Mini Bot
+        </p>
+
+    </div>
+
+
+    <!-- BALANCE -->
+
+    <div class="balance-card">
+
+        <div class="balance-title">
+            Your Balance
+        </div>
+
+        <div class="balance">
+
+            <span id="balance">
+                0.00
+            </span>
+
+            <span class="birr">
+                Birr
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div
+                class="stat-number"
+                id="referrals"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Referrals
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div
+                class="stat-number"
+                id="tasks"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Tasks
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+        <button
+            class="primary"
+            onclick="showPanel('ads')"
+        >
+            🎬 Watch Ads
+        </button>
+
+        <button
+            onclick="showPanel('tasks')"
+        >
+            📋 Tasks
+        </button>
+
+        <button
+            onclick="showPanel('referral')"
+        >
+            👥 Invite Friends
+        </button>
+
+        <button
+            onclick="loadHistory()"
+        >
+            📜 History
+        </button>
+
+        <button
+            onclick="showPanel('withdraw')"
+        >
+            💸 Withdraw
+        </button>
+
+        <button
+            onclick="refreshUser()"
+        >
+            🔄 Refresh
+        </button>
+
+    </div>
+
+
+    <!-- ADS -->
+
+    <div
+        id="ads"
+        class="panel"
+    >
+
+        <h2>
+            🎬 Watch Ads
+        </h2>
+
+        <p>
+            Ads system will be connected here.
+        </p>
+
+    </div>
+
+
+    <!-- TASKS -->
+
+    <div
+        id="tasks"
+        class="panel"
+    >
+
+        <h2>
+            📋 Tasks
+        </h2>
+
+        <p>
+            Available tasks will appear here.
+        </p>
+
+    </div>
+
+
+    <!-- REFERRAL -->
+
+    <div
+        id="referral"
+        class="panel"
+    >
+
+        <h2>
+            👥 Invite Friends
+        </h2>
+
+        <p>
+            Invite friends and earn
+            <b>1 Birr</b>
+            for each qualified referral.
+        </p>
+
+        <div
+            id="refLink"
+            class="ref-link"
+        >
+            Loading...
+        </div>
+
+        <button
+            class="primary"
+            onclick="copyReferral()"
+        >
+            📋 Copy Referral Link
+        </button>
+
+        <br><br>
+
+        <button
+            onclick="shareReferral()"
+        >
+            📤 Share
+        </button>
+
+    </div>
+
+
+    <!-- HISTORY -->
+
+    <div
+        id="history"
+        class="panel"
+    >
+
+        <h2>
+            📜 Transaction History
+        </h2>
+
+        <div id="historyList">
+            Loading...
+        </div>
+
+    </div>
+
+
+    <!-- WITHDRAW -->
+
+    <div
+        id="withdraw"
+        class="panel"
+    >
+
+        <h2>
+            💸 Withdraw
+        </h2>
+
+        <p>
+            Withdrawal system will be connected next.
+        </p>
+
+        <br>
+
+        <p class="small">
+            Minimum withdrawal requirements
+            will be added here.
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // =====================================================
+    // TELEGRAM
+    // =====================================================
+
+    const tg = window.Telegram.WebApp;
+
+    tg.ready();
+
+    tg.expand();
+
+
+    // =====================================================
+    // BACKEND
+    // =====================================================
+
+    const API_URL =
+        "https://adewa-mini-backend.vercel.app";
+
+
+    // =====================================================
+    // INIT DATA
+    // =====================================================
+
+    const initData =
+        tg.initData;
+
+
+    // =====================================================
+    // TELEGRAM USER
+    // =====================================================
+
+    const telegramUser =
+        tg.initDataUnsafe &&
+        tg.initDataUnsafe.user
+            ? tg.initDataUnsafe.user
+            : null;
+
+
+    // =====================================================
+    // STATUS
+    // =====================================================
+
+    function showStatus(text) {
+
+        const box =
+            document.getElementById("status");
+
+        box.innerText = text;
+
+        box.style.display = "block";
+
+    }
+
+
+    function hideStatus() {
+
+        document.getElementById(
+            "status"
+        ).style.display = "none";
+
+    }
+
+
+    // =====================================================
+    // PANELS
+    // =====================================================
+
+    function hidePanels() {
+
+        document
+            .querySelectorAll(".panel")
+            .forEach(function(panel) {
+
+                panel.style.display = "none";
+
+            });
+
+    }
+
+
+    function showPanel(id) {
+
+        hidePanels();
+
+        const panel =
+            document.getElementById(id);
+
+        if (panel) {
+
+            panel.style.display = "block";
+
+        }
+
+    }
+
+
+    // =====================================================
+    // FORMAT MONEY
+    // =====================================================
+
+    function formatMoney(value) {
+
+        return Number(value || 0)
+            .toFixed(2);
+
+    }
+
+
+    // =====================================================
+    // LOAD USER
+    // =====================================================
+
+    async function loadUser() {
+
+        if (!initData) {
+
+            showStatus(
+                "⚠️ Please open this Mini App from Telegram."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            showStatus(
+                "⏳ Loading your account..."
+            );
+
+
+            const response =
+                await fetch(
+                    API_URL + "/api/me",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            initData:
+                                initData
+
+                        })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok || !data.success) {
+
+                throw new Error(
+                    data.error ||
+                    "Failed to load account"
+                );
+
+            }
+
+
+            updateUserUI(
+                data.user
+            );
+
+
+            hideStatus();
+
+
+            // ---------------------------------------------
+            // QUALIFY REFERRAL
+            // ---------------------------------------------
+
+            await qualifyReferral(
+                data.user.telegram_id
+            );
+
+
+        } catch (error) {
+
+            showStatus(
+                "❌ " + error.message
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // UPDATE UI
+    // =====================================================
+
+    function updateUserUI(user) {
+
+        let name =
+            user.first_name ||
+            "User";
+
+
+        document.getElementById(
+            "welcome"
+        ).innerText =
+            "Welcome, " + name + " 👋";
+
+
+        document.getElementById(
+            "balance"
+        ).innerText =
+            formatMoney(
+                user.balance
+            );
+
+
+        document.getElementById(
+            "referrals"
+        ).innerText =
+            user.referral_count || 0;
+
+
+        document.getElementById(
+            "tasks"
+        ).innerText =
+            user.tasks_completed || 0;
+
+
+        updateReferralLink(
+            user.telegram_id
+        );
+
+    }
+
+
+    // =====================================================
+    // REFERRAL LINK
+    // =====================================================
+
+    function updateReferralLink(
+        telegramId
+    ) {
+
+        const link =
+            "https://t.me/M_r_work2bot?start=ref_"
+            + telegramId;
+
+
+        document.getElementById(
+            "refLink"
+        ).innerText =
+            link;
+
+    }
+
+
+    // =====================================================
+    // QUALIFY REFERRAL
+    // =====================================================
+
+    async function qualifyReferral(
+        userId
+    ) {
+
+        try {
+
+            /*
+             * The current backend endpoint is
+             * protected by BOT_API_SECRET.
+             *
+             * Therefore we do not send a secret
+             * from the browser.
+             *
+             * This function is kept ready for
+             * the authenticated referral endpoint.
+             */
+
+            console.log(
+                "Referral qualification requested for:",
+                userId
+            );
+
+        } catch (error) {
+
+            console.log(
+                "Referral qualification error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // REFRESH
+    // =====================================================
+
+    async function refreshUser() {
+
+        await loadUser();
+
+    }
+
+
+    // =====================================================
+    // HISTORY
+    // =====================================================
+
+    async function loadHistory() {
+
+        showPanel(
+            "history"
+        );
+
+
+        if (!initData) {
+
+            document.getElementById(
+                "historyList"
+            ).innerText =
+                "P😝lease open the Mini App from Telegram.";
+
+            return;
+
+        }
+
+
+        const list =
+            document.getElementById(
+                "historyList"
+            );
+
+
+        list.innerText =
+            "Loading...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    API_URL + "/api/history",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            initData:
+                                initData
+
+                        })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok || !data.success) {
+
+                throw new Error(
+                    data.error ||
+                    "Failed to load history"
+                );
+
+            }
+
+
+            if (!data.history.length) {
+
+                list.innerText =
+                    "No transactions yet.";
+
+                return;
+
+            }
+
+
+            list.innerHTML = "";
+
+
+            data.history.forEach(
+                function(item) {
+
+                    const div =
+                        document.createElement(
+                            "div"
+                        );
+
+                    div.className =
+                        "history-item";
+
+
+                    div.innerHTML =
+
+                        "<div class='history-type'>"
+                        + escapeHtml(
+                            item.type
+                        )
+                        + "</div>"
+
+                        +
+
+                        "<div class='history-amount'>"
+                        + (
+                            Number(item.amount) >= 0
+                                ? "+"
+                                : ""
+                        )
+                        + formatMoney(
+                            item.amount
+                        )
+                        + " Birr"
+                        + "</div>"
+
+                        +
+
+                        "<div class='small'>"
+                        + escapeHtml(
+                            item.description || ""
+                        )
+                        + "</div>";
+
+
+                    list.appendChild(
+                        div
+                    );
+
+                }
+            );
+
+
+        } catch (error) {
+
+            list.innerText =
+                "❌ " + error.message;
+
+        }
+
+    }
+
+
+    // =====================================================
+    // COPY REFERRAL
+    // =====================================================
+
+    async function copyReferral() {
+
+        const link =
+            document.getElementById(
+                "refLink"
+            ).innerText;
+
+
+        try {
+
+            await navigator.clipboard.writeText(
+                link
+            );
+
+            showStatus(
+                "✅ Referral link copied!"
+            );
+
+            setTimeout(
+                hideStatus,
+                2000
+            );
+
+        } catch {
+
+            showStatus(
+                "❌ Could not copy the link."
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // SHARE REFERRAL
+    // =====================================================
+
+    function shareReferral() {
+
+        const link =
+            document.getElementById(
+                "refLink"
+            ).innerText;
+
+
+        const text =
+            "Join ADEWA Mini Bot and earn rewards!";
+
+
+        const shareUrl =
+            "https://t.me/share/url?url="
+            + encodeURIComponent(link)
+            + "&text="
+            + encodeURIComponent(text);
+
+
+        tg.openTelegramLink(
+            shareUrl
+        );
+
+    }
+
+
+    // =====================================================
+    // ESCAPE HTML
+    // =====================================================
+
+    function escapeHtml(value) {
+
+        return String(value || "")
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    // =====================================================
+    // START
+    // =====================================================
+
+    if (telegramUser) {
+
+        loadUser();
+
+    } else {
+
+        showStatus(
+            "⚠️ Open ADEWA Mini Bot from Telegram."
+        );
+
+    }
+
+</script>
+
+</body>
+      </html>
