@@ -2,19 +2,19 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
 
 <title>ADEWA Mini Bot</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<!-- AdsGram SDK -->
 <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
 <style>
@@ -27,21 +27,28 @@ user-scalable=no">
 }
 
 body{
-    background:#f4f7fb;
-    color:#111827;
+    background:#f5f8ff;
+    color:#172033;
     min-height:100vh;
 }
 
+.app{
+    max-width:520px;
+    margin:auto;
+    min-height:100vh;
+    padding-bottom:90px;
+}
+
 .header{
-    background:#2563eb;
+    background:linear-gradient(135deg,#1769ff,#0d47c7);
     color:white;
-    padding:22px 18px;
+    padding:28px 20px 30px;
     border-radius:0 0 25px 25px;
 }
 
-.header h2{
-    font-size:22px;
-    margin-bottom:6px;
+.header h1{
+    font-size:25px;
+    margin-bottom:7px;
 }
 
 .header p{
@@ -49,483 +56,690 @@ body{
     font-size:14px;
 }
 
-.container{
-    padding:18px;
-    padding-bottom:90px;
-}
-
 .balance-card{
+    margin:18px;
+    padding:22px;
     background:white;
     border-radius:20px;
-    padding:22px;
-    margin-bottom:18px;
-    box-shadow:0 5px 20px rgba(0,0,0,.06);
+    box-shadow:0 8px 25px rgba(0,0,0,.07);
 }
 
-.balance-title{
-    color:#6b7280;
+.balance-label{
+    color:#7b8497;
     font-size:13px;
 }
 
 .balance{
     font-size:32px;
     font-weight:bold;
-    margin-top:8px;
-}
-
-.currency{
-    font-size:13px;
-    color:#6b7280;
+    margin-top:7px;
+    color:#1769ff;
 }
 
 .stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:10px;
-    margin-top:18px;
+    margin:0 18px 18px;
 }
 
 .stat{
-    background:#f8fafc;
-    border-radius:15px;
-    padding:14px 8px;
+    background:white;
+    border-radius:16px;
+    padding:15px 8px;
     text-align:center;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
 }
 
 .stat strong{
     display:block;
-    font-size:18px;
+    font-size:19px;
+    margin-bottom:4px;
 }
 
 .stat span{
-    color:#6b7280;
+    color:#7b8497;
     font-size:11px;
+}
+
+.section{
+    padding:0 18px;
+}
+
+.section-title{
+    font-size:19px;
+    font-weight:bold;
+    margin:20px 0 12px;
 }
 
 .card{
     background:white;
-    border-radius:20px;
-    padding:20px;
-    margin-bottom:16px;
-    box-shadow:0 5px 20px rgba(0,0,0,.05);
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
 }
 
-.card h3{
-    margin-bottom:8px;
+.earn-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
 }
 
-.card p{
-    color:#6b7280;
-    font-size:14px;
-    line-height:1.5;
+.earn-info{
+    flex:1;
+}
+
+.earn-icon{
+    width:48px;
+    height:48px;
+    border-radius:15px;
+    background:#eaf2ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:23px;
+}
+
+.earn-title{
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.earn-desc{
+    color:#7b8497;
+    font-size:12px;
+    line-height:1.4;
+}
+
+button{
+    border:none;
+    cursor:pointer;
 }
 
 .primary-btn{
-    width:100%;
-    border:0;
-    border-radius:14px;
-    padding:15px;
-    background:#2563eb;
+    background:#1769ff;
     color:white;
-    font-size:16px;
+    padding:12px 15px;
+    border-radius:12px;
     font-weight:bold;
-    margin-top:15px;
+    min-width:95px;
 }
 
 .primary-btn:disabled{
-    opacity:.55;
+    opacity:.6;
 }
 
 .secondary-btn{
-    width:100%;
-    border:0;
-    border-radius:14px;
-    padding:13px;
-    background:#eef2ff;
-    color:#2563eb;
-    font-size:15px;
-    font-weight:bold;
-    margin-top:10px;
-}
-
-.input{
-    width:100%;
-    border:1px solid #dbe2ea;
+    background:#eef4ff;
+    color:#1769ff;
+    padding:12px 15px;
     border-radius:12px;
-    padding:13px;
-    margin-top:10px;
-    outline:none;
-}
-
-.nav{
-    position:fixed;
-    left:10px;
-    right:10px;
-    bottom:10px;
-    background:white;
-    border-radius:18px;
-    box-shadow:0 5px 25px rgba(0,0,0,.12);
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    padding:8px;
-    z-index:100;
-}
-
-.nav button{
-    border:0;
-    background:transparent;
-    padding:8px 2px;
-    font-size:11px;
-    color:#6b7280;
-}
-
-.nav button.active{
-    color:#2563eb;
     font-weight:bold;
 }
 
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-.loading{
-    text-align:center;
-    padding:40px 10px;
-    color:#6b7280;
-}
-
-.message{
+.referral-box{
+    background:#eef5ff;
+    border-radius:15px;
+    padding:15px;
     margin-top:12px;
-    padding:12px;
-    border-radius:12px;
-    background:#f1f5f9;
-    font-size:13px;
-    display:none;
-}
-
-.ref-box{
-    background:#f8fafc;
-    padding:12px;
-    border-radius:12px;
     word-break:break-all;
     font-size:12px;
-    color:#475569;
-    margin-top:10px;
+    color:#41506a;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    margin-top:12px;
+}
+
+.actions button{
+    flex:1;
+}
+
+.status{
+    text-align:center;
+    font-size:13px;
+    margin:10px 18px;
+    color:#667085;
 }
 
 .history-item{
-    border-bottom:1px solid #eef2f7;
-    padding:12px 0;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:14px 0;
+    border-bottom:1px solid #edf0f5;
 }
 
 .history-item:last-child{
-    border-bottom:0;
+    border-bottom:none;
 }
 
-.history-item strong{
+.history-name{
+    font-weight:bold;
+    font-size:13px;
+}
+
+.history-date{
+    font-size:10px;
+    color:#9299a8;
+    margin-top:4px;
+}
+
+.history-amount{
+    color:#0a9f54;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.empty{
+    text-align:center;
+    padding:25px 10px;
+    color:#8991a0;
+    font-size:13px;
+}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:520px;
+    background:white;
+    border-top:1px solid #e8ebf1;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    padding:9px 5px calc(9px + env(safe-area-inset-bottom));
+    z-index:20;
+}
+
+.nav-btn{
+    background:none;
+    color:#7c8494;
+    font-size:10px;
+    padding:5px 2px;
+}
+
+.nav-btn span{
+    display:block;
+    font-size:19px;
+    margin-bottom:3px;
+}
+
+.nav-btn.active{
+    color:#1769ff;
+    font-weight:bold;
+}
+
+.panel{
+    display:none;
+}
+
+.panel.active{
     display:block;
 }
 
-.history-item span{
+.loader{
+    text-align:center;
+    padding:35px;
+    color:#6e7788;
+}
+
+.notice{
+    background:#fff8df;
+    color:#755c00;
+    border-radius:14px;
+    padding:13px;
     font-size:12px;
-    color:#6b7280;
+    line-height:1.5;
+    margin-bottom:12px;
+}
+
+.success{
+    color:#07944b;
+}
+
+.error{
+    color:#d92d20;
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<div class="header">
+<div class="app">
 
-    <h2 id="welcome">
-        Welcome 👋
-    </h2>
+    <!-- HEADER -->
 
-    <p>
-        ADEWA Mini Bot
-    </p>
+    <div class="header">
 
-</div>
+        <h1>
+            ADEWA Mini Bot
+        </h1>
 
-<div class="container">
+        <p id="welcome">
+            Loading your account...
+        </p>
 
-<!-- ================= HOME ================= -->
+    </div>
 
-<div id="homePage" class="page active">
 
-    <div class="balance-card">
+    <!-- HOME -->
 
-        <div class="balance-title">
-            Current Balance
+    <div id="homePanel"
+         class="panel active">
+
+        <div class="balance-card">
+
+            <div class="balance-label">
+                Available Balance
+            </div>
+
+            <div class="balance">
+                <span id="balance">
+                    0.00
+                </span>
+                Birr
+            </div>
+
         </div>
 
-        <div class="balance">
-            <span id="balance">
-                0.00
-            </span>
-        </div>
-
-        <div class="currency">
-            USD₮
-        </div>
 
         <div class="stats">
 
             <div class="stat">
+
+                <strong id="totalEarned">
+                    0.00
+                </strong>
+
+                <span>
+                    Total earned
+                </span>
+
+            </div>
+
+            <div class="stat">
+
                 <strong id="referrals">
                     0
                 </strong>
+
                 <span>
                     Referrals
                 </span>
+
             </div>
 
             <div class="stat">
+
                 <strong id="tasks">
                     0
                 </strong>
+
                 <span>
                     Tasks
                 </span>
-            </div>
 
-            <div class="stat">
-                <strong id="status">
-                    -
-                </strong>
-                <span>
-                    Status
-                </span>
             </div>
 
         </div>
 
-    </div>
 
-    <div class="card">
+        <div class="section">
 
-        <h3>
-            🎁 Earn Rewards
-        </h3>
-
-        <p>
-            Watch available rewarded ads and earn rewards.
-        </p>
-
-        <button
-            class="primary-btn"
-            onclick="openPage('adsPage')">
-
-            📺 Watch Ads
-
-        </button>
-
-    </div>
-
-    <div class="card">
-
-        <h3>
-            👥 Invite Friends
-        </h3>
-
-        <p>
-            Share your referral link with friends.
-        </p>
-
-        <div
-            class="ref-box"
-            id="referralLink">
-
-            Loading...
-
-        </div>
-
-        <button
-            class="secondary-btn"
-            onclick="copyReferral()">
-
-            📋 Copy Referral Link
-
-        </button>
-
-        <button
-            class="secondary-btn"
-            onclick="shareReferral()">
-
-            📤 Share
-
-        </button>
-
-    </div>
-
-</div>
+            <div class="section-title">
+                Earn
+            </div>
 
 
-<!-- ================= ADS ================= -->
+            <!-- ADS -->
 
-<div id="adsPage" class="page">
+            <div class="card earn-card">
 
-    <div class="card">
+                <div class="earn-icon">
+                    🎬
+                </div>
 
-        <h3>
-            📺 Watch & Earn
-        </h3>
+                <div class="earn-info">
 
-        <p>
-            Watch the complete rewarded advertisement.
-            Your reward will be added after the ad finishes.
-        </p>
+                    <div class="earn-title">
+                        Watch Ads
+                    </div>
 
-        <button
-            id="watchAdButton"
-            class="primary-btn"
-            onclick="watchAd()">
+                    <div class="earn-desc">
+                        Watch a rewarded advertisement
+                        and earn 0.01 Birr.
+                    </div>
 
-            ▶️ Watch Ad
+                </div>
 
-        </button>
+                <button
+                    id="watchAdBtn"
+                    class="primary-btn"
+                    onclick="watchAd()">
 
-        <div
-            id="adMessage"
-            class="message">
-        </div>
+                    Watch
 
-    </div>
+                </button>
 
-</div>
-
-
-<!-- ================= TASKS ================= -->
-
-<div id="tasksPage" class="page">
-
-    <div class="card">
-
-        <h3>
-            📋 Tasks
-        </h3>
-
-        <p>
-            Tasks will be added here.
-        </p>
-
-    </div>
-
-</div>
+            </div>
 
 
-<!-- ================= HISTORY ================= -->
+            <!-- TASKS -->
 
-<div id="historyPage" class="page">
+            <div class="card earn-card">
 
-    <div class="card">
+                <div class="earn-icon">
+                    📝
+                </div>
 
-        <h3>
-            📊 Transactions
-        </h3>
+                <div class="earn-info">
 
-        <div id="historyList">
+                    <div class="earn-title">
+                        Tasks
+                    </div>
 
-            <div class="loading">
-                Loading...
+                    <div class="earn-desc">
+                        Complete available tasks
+                        and earn rewards.
+                    </div>
+
+                </div>
+
+                <button
+                    class="secondary-btn"
+                    onclick="openPanel('tasks')">
+
+                    Open
+
+                </button>
+
+            </div>
+
+
+            <!-- REFERRAL -->
+
+            <div class="card">
+
+                <div class="earn-title">
+                    👥 Invite Friends
+                </div>
+
+                <div class="earn-desc">
+                    Invite friends and receive
+                    1.00 Birr when their account
+                    becomes verified.
+                </div>
+
+                <div class="referral-box"
+                     id="referralLink">
+
+                    Loading referral link...
+
+                </div>
+
+                <div class="actions">
+
+                    <button
+                        class="secondary-btn"
+                        onclick="copyReferral()">
+
+                        Copy
+
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        onclick="shareReferral()">
+
+                        Share
+
+                    </button>
+
+                </div>
+
             </div>
 
         </div>
 
     </div>
 
-</div>
 
+    <!-- ADS PANEL -->
 
-<!-- ================= WITHDRAW ================= -->
+    <div id="adsPanel"
+         class="panel">
 
-<div id="withdrawPage" class="page">
+        <div class="section">
 
-    <div class="card">
+            <div class="section-title">
+                Watch Ads
+            </div>
 
-        <h3>
-            💸 Withdraw Funds
-        </h3>
+            <div class="notice">
 
-        <p>
-            We only send USD₮ on the TON network.
-        </p>
+                Each completed rewarded ad gives
+                <b>0.01 Birr</b>.
 
-        <div
-            id="withdrawInfo"
-            class="message">
+                <br><br>
+
+                Maximum:
+                <b>20 rewarded ads per day</b>.
+
+            </div>
+
+            <div class="card">
+
+                <div style="
+                    font-size:30px;
+                    margin-bottom:10px;
+                ">
+                    🎬
+                </div>
+
+                <div class="earn-title">
+                    AdsGram Reward
+                </div>
+
+                <div class="earn-desc">
+                    Block ID: 48046
+                </div>
+
+                <br>
+
+                <button
+                    id="watchAdBtn2"
+                    class="primary-btn"
+                    style="width:100%;"
+                    onclick="watchAd()">
+
+                    ▶ Watch Ad & Earn
+
+                </button>
+
+                <div
+                    id="adStatus"
+                    class="status">
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
-</div>
 
-</div>
+    <!-- TASKS PANEL -->
+
+    <div id="tasksPanel"
+         class="panel">
+
+        <div class="section">
+
+            <div class="section-title">
+                Tasks
+            </div>
+
+            <div class="card">
+
+                <div class="earn-title">
+                    📋 Available Tasks
+                </div>
+
+                <div class="earn-desc">
+                    New tasks will appear here.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
-<!-- ================= NAVIGATION ================= -->
+    <!-- HISTORY PANEL -->
 
-<div class="nav">
+    <div id="historyPanel"
+         class="panel">
 
-    <button
-        id="navHome"
-        class="active"
-        onclick="openPage('homePage')">
+        <div class="section">
 
-        🏠<br>
-        Home
+            <div class="section-title">
+                History
+            </div>
 
-    </button>
+            <div id="historyList"
+                 class="card">
 
-    <button
-        id="navAds"
-        onclick="openPage('adsPage')">
+                <div class="loader">
+                    Loading history...
+                </div>
 
-        📺<br>
-        Ads
+            </div>
 
-    </button>
+        </div>
 
-    <button
-        id="navTasks"
-        onclick="openPage('tasksPage')">
+    </div>
 
-        📋<br>
-        Tasks
 
-    </button>
+    <!-- WITHDRAW PANEL -->
 
-    <button
-        id="navHistory"
-        onclick="openPage('historyPage')">
+    <div id="withdrawPanel"
+         class="panel">
 
-        📊<br>
-        History
+        <div class="section">
 
-    </button>
+            <div class="section-title">
+                Withdraw
+            </div>
 
-    <button
-        id="navWithdraw"
-        onclick="openPage('withdrawPage')">
+            <div class="card">
 
-        💸<br>
-        Withdraw
+                <div class="earn-title">
+                    💰 Available Balance
+                </div>
 
-    </button>
+                <div class="balance"
+                     style="margin:10px 0 15px;">
+
+                    <span id="withdrawBalance">
+                        0.00
+                    </span>
+
+                    Birr
+
+                </div>
+
+                <div class="notice">
+
+                    Withdrawal system will be
+                    available after the required
+                    backend rules are configured.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div id="globalStatus"
+         class="status">
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="bottom-nav">
+
+        <button
+            class="nav-btn active"
+            id="nav-home"
+            onclick="openPanel('home')">
+
+            <span>🏠</span>
+            Home
+
+        </button>
+
+        <button
+            class="nav-btn"
+            id="nav-ads"
+            onclick="openPanel('ads')">
+
+            <span>🎬</span>
+            Ads
+
+        </button>
+
+        <button
+            class="nav-btn"
+            id="nav-tasks"
+            onclick="openPanel('tasks')">
+
+            <span>📝</span>
+            Tasks
+
+        </button>
+
+        <button
+            class="nav-btn"
+            id="nav-history"
+            onclick="openPanel('history')">
+
+            <span>📜</span>
+            History
+
+        </button>
+
+        <button
+            class="nav-btn"
+            id="nav-withdraw"
+            onclick="openPanel('withdraw')">
+
+            <span>💰</span>
+            Withdraw
+
+        </button>
+
+    </div>
 
 </div>
 
 
 <script>
-
-/* ==========================================
-   TELEGRAM
-========================================== */
 
 const tg = window.Telegram.WebApp;
 
@@ -533,46 +747,93 @@ tg.ready();
 tg.expand();
 
 
-/* ==========================================
-   CONFIG
-========================================== */
-
 const API_URL =
     "https://adewa-mini-backend.vercel.app";
 
+
 const ADSGRAM_BLOCK_ID =
-    "int-48036";
+    "48046";
 
-
-/* ==========================================
-   STATE
-========================================== */
 
 let currentUser = null;
-let AdController = null;
+
+let adController = null;
+
+let adRewardInProgress = false;
 
 
-/* ==========================================
-   API REQUEST
-========================================== */
+/* =====================================================
+   ADSGRAM
+   ===================================================== */
 
-async function apiRequest(endpoint, options = {}){
+function initAdsGram(){
 
-    const response = await fetch(
-        API_URL + endpoint,
-        options
-    );
+    try{
+
+        if(
+            !window.Adsgram
+        ){
+
+            console.error(
+                "AdsGram SDK not loaded"
+            );
+
+            return false;
+        }
+
+        adController =
+            window.Adsgram.init({
+
+                blockId:
+                    ADSGRAM_BLOCK_ID
+
+            });
+
+        return true;
+
+    }catch(error){
+
+        console.error(
+            "AdsGram init error:",
+            error
+        );
+
+        return false;
+    }
+}
+
+
+/* =====================================================
+   SAFE API
+   ===================================================== */
+
+async function apiRequest(
+    endpoint,
+    options = {}
+){
+
+    const url =
+        API_URL + endpoint;
+
+    const response =
+        await fetch(
+            url,
+            options
+        );
 
     const contentType =
-        response.headers.get("content-type") || "";
+        response.headers.get(
+            "content-type"
+        ) || "";
 
     const raw =
         await response.text();
 
+
     if(
         !contentType
-        .toLowerCase()
-        .includes("application/json")
+            .toLowerCase()
+            .includes("application/json")
     ){
 
         console.error(
@@ -581,25 +842,33 @@ async function apiRequest(endpoint, options = {}){
         );
 
         throw new Error(
-            "Backend returned non-JSON response. HTTP "
+            "Backend returned HTML instead of JSON. HTTP "
             + response.status
+            + " | "
+            + url
         );
-
     }
+
 
     let data;
 
     try{
 
-        data = JSON.parse(raw);
+        data =
+            JSON.parse(raw);
 
     }catch(error){
+
+        console.error(
+            "Invalid JSON:",
+            raw
+        );
 
         throw new Error(
             "Backend returned invalid JSON."
         );
-
     }
+
 
     if(!response.ok){
 
@@ -607,21 +876,28 @@ async function apiRequest(endpoint, options = {}){
             data.error ||
             "Backend request failed."
         );
-
     }
 
-    return data;
 
+    return data;
 }
 
 
-/* ==========================================
+/* =====================================================
    LOAD USER
-========================================== */
+   ===================================================== */
 
 async function loadUser(){
 
     try{
+
+        if(!tg.initData){
+
+            throw new Error(
+                "Telegram initData is missing."
+            );
+        }
+
 
         const data =
             await apiRequest(
@@ -634,44 +910,51 @@ async function loadUser(){
                             "application/json"
                     },
 
-                    body:JSON.stringify({
-                        initData:
-                            tg.initData
-                    })
+                    body:
+                        JSON.stringify({
+
+                            initData:
+                                tg.initData
+
+                        })
                 }
             );
 
-        if(!data.success){
+
+        if(
+            !data.success ||
+            !data.user
+        ){
 
             throw new Error(
                 data.error ||
-                "Unable to load user."
+                "Could not load account."
             );
-
         }
+
 
         currentUser =
             data.user;
 
+
         updateUI();
+
 
     }catch(error){
 
         console.error(error);
 
-        document.getElementById(
-            "welcome"
-        ).innerText =
-            "Connection Error";
-
+        showStatus(
+            error.message,
+            true
+        );
     }
-
 }
 
 
-/* ==========================================
+/* =====================================================
    UPDATE UI
-========================================== */
+   ===================================================== */
 
 function updateUI(){
 
@@ -679,169 +962,164 @@ function updateUI(){
         return;
     }
 
+
     document.getElementById(
         "welcome"
-    ).innerText =
+    ).textContent =
         "Welcome, "
         + (
-            currentUser.first_name ||
-            "User"
+            currentUser.first_name
+            || "User"
         )
         + " 👋";
 
-    document.getElementById(
-        "balance"
-    ).innerText =
+
+    const balance =
         Number(
             currentUser.balance || 0
         ).toFixed(2);
 
+
+    document.getElementById(
+        "balance"
+    ).textContent =
+        balance;
+
+
+    document.getElementById(
+        "withdrawBalance"
+    ).textContent =
+        balance;
+
+
     document.getElementById(
         "referrals"
-    ).innerText =
-        currentUser.referral_count || 0;
+    ).textContent =
+        currentUser.referral_count
+        || 0;
+
 
     document.getElementById(
         "tasks"
-    ).innerText =
-        currentUser.tasks_completed || 0;
+    ).textContent =
+        currentUser.tasks_completed
+        || 0;
+
 
     document.getElementById(
-        "status"
-    ).innerText =
-        currentUser.verified
-        ? "Verified"
-        : "Pending";
+        "totalEarned"
+    ).textContent =
+        balance;
 
 
-    if(currentUser.telegram_id){
+    const referral =
+        "https://t.me/M_r_work2bot?start=ref_"
+        + currentUser.telegram_id;
 
-        const link =
-            "https://t.me/M_r_work2bot?start=ref_"
-            + currentUser.telegram_id;
 
-        document.getElementById(
-            "referralLink"
-        ).innerText =
-            link;
-
-    }
-
+    document.getElementById(
+        "referralLink"
+    ).textContent =
+        referral;
 }
 
 
-/* ==========================================
-   ADSGRAM INITIALIZE
-========================================== */
-
-function initializeAds(){
-
-    try{
-
-        if(
-            !window.Adsgram
-        ){
-
-            console.error(
-                "AdsGram SDK not loaded."
-            );
-
-            return;
-
-        }
-
-        AdController =
-            window.Adsgram.init({
-                blockId:
-                    ADSGRAM_BLOCK_ID
-            });
-
-        console.log(
-            "AdsGram initialized:",
-            ADSGRAM_BLOCK_ID
-        );
-
-    }catch(error){
-
-        console.error(
-            "AdsGram initialization error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   WATCH AD
-========================================== */
+/* =====================================================
+   WATCH ADS
+   ===================================================== */
 
 async function watchAd(){
 
-    const button =
-        document.getElementById(
-            "watchAdButton"
-        );
-
-    const message =
-        document.getElementById(
-            "adMessage"
-        );
-
-
-    if(!AdController){
-
-        message.style.display =
-            "block";
-
-        message.innerText =
-            "⚠️ Advertisement is not ready. Please try again.";
-
-        initializeAds();
-
+    if(adRewardInProgress){
         return;
-
     }
 
 
     if(
-        !tg.initData
+        !currentUser
     ){
 
-        message.style.display =
-            "block";
-
-        message.innerText =
-            "⚠️ Telegram user information is missing.";
+        showStatus(
+            "Account is still loading.",
+            true
+        );
 
         return;
-
     }
 
 
-    button.disabled = true;
+    if(
+        !currentUser.verified
+    ){
 
-    button.innerText =
-        "⏳ Loading Ad...";
+        showStatus(
+            "Please verify your account first.",
+            true
+        );
 
-    message.style.display =
-        "block";
+        return;
+    }
 
-    message.innerText =
-        "Please wait for the advertisement...";
+
+    if(
+        !adController
+    ){
+
+        const ready =
+            initAdsGram();
+
+        if(!ready){
+
+            showStatus(
+                "AdsGram is not ready. Please reopen the Mini App.",
+                true
+            );
+
+            return;
+        }
+    }
+
+
+    adRewardInProgress = true;
+
+
+    const button1 =
+        document.getElementById(
+            "watchAdBtn"
+        );
+
+    const button2 =
+        document.getElementById(
+            "watchAdBtn2"
+        );
+
+
+    if(button1){
+        button1.disabled = true;
+    }
+
+    if(button2){
+        button2.disabled = true;
+    }
+
+
+    setAdStatus(
+        "Loading advertisement..."
+    );
 
 
     try{
 
-        const result =
-            await AdController.show();
-
-
         /*
-         * Reward only after AdsGram resolves
-         * the rewarded advertisement.
+         * AdsGram Reward format:
+         *
+         * Promise resolves when the user
+         * watches the rewarded ad to the end.
          */
+
+        const result =
+            await adController.show();
+
 
         console.log(
             "AdsGram result:",
@@ -849,47 +1127,32 @@ async function watchAd(){
         );
 
 
-        await claimAdReward();
+        /*
+         * Only reward when done === true.
+         */
+
+        if(
+            result &&
+            result.done === false
+        ){
+
+            throw new Error(
+                "Advertisement was not completed."
+            );
+        }
 
 
-    }catch(error){
-
-        console.error(
-            "AdsGram error:",
-            error
-        );
-
-        message.innerText =
-            "❌ Advertisement could not be completed. Please try again.";
-
-    }finally{
-
-        button.disabled =
-            false;
-
-        button.innerText =
-            "▶️ Watch Ad";
-
-    }
-
-}
-
-
-/* ==========================================
-   CLAIM AD REWARD
-========================================== */
-
-async function claimAdReward(){
-
-    const message =
-        document.getElementById(
-            "adMessage"
+        setAdStatus(
+            "Advertisement completed. Adding reward..."
         );
 
 
-    try{
+        /*
+         * Tell backend that the verified
+         * Telegram user completed the ad.
+         */
 
-        const data =
+        const rewardData =
             await apiRequest(
                 "/api/reward/ad",
                 {
@@ -900,113 +1163,185 @@ async function claimAdReward(){
                             "application/json"
                     },
 
-                    body:JSON.stringify({
+                    body:
+                        JSON.stringify({
 
-                        initData:
-                            tg.initData
+                            initData:
+                                tg.initData
 
-                    })
+                        })
                 }
             );
 
 
-        if(!data.success){
+        if(
+            rewardData.success
+        ){
 
-            throw new Error(
-                data.error ||
-                "Reward failed."
+            currentUser =
+                rewardData.user;
+
+
+            updateUI();
+
+
+            setAdStatus(
+                "✅ +0.01 Birr added to your balance."
             );
 
+        }else{
+
+            throw new Error(
+                rewardData.error ||
+                "Reward failed."
+            );
         }
 
 
-        currentUser =
-            data.user;
-
-        updateUI();
-
-
-        message.innerText =
-            "🎉 Ad completed! "
-            + data.reward
-            + " USD₮ added to your balance.";
-
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "AdsGram error:",
+            error
+        );
 
-        message.innerText =
-            "⚠️ "
-            + error.message;
 
+        setAdStatus(
+            "Ad was skipped, unavailable, or not completed."
+        );
+
+    }finally{
+
+        adRewardInProgress =
+            false;
+
+
+        if(button1){
+            button1.disabled = false;
+        }
+
+        if(button2){
+            button2.disabled = false;
+        }
     }
-
 }
 
 
-/* ==========================================
-   COPY REFERRAL
-========================================== */
+/* =====================================================
+   STATUS
+   ===================================================== */
 
-async function copyReferral(){
+function setAdStatus(text){
 
-    const link =
+    const el =
         document.getElementById(
-            "referralLink"
-        ).innerText;
-
-    try{
-
-        await navigator.clipboard.writeText(
-            link
+            "adStatus"
         );
 
-        tg.showAlert(
-            "Referral link copied!"
-        );
-
-    }catch(error){
-
-        tg.showAlert(
-            link
-        );
-
+    if(el){
+        el.textContent =
+            text;
     }
-
 }
 
 
-/* ==========================================
-   SHARE REFERRAL
-========================================== */
+function showStatus(
+    text,
+    isError = false
+){
 
-function shareReferral(){
-
-    const link =
+    const el =
         document.getElementById(
-            "referralLink"
-        ).innerText;
+            "globalStatus"
+        );
 
-    const text =
-        "Join ADEWA Mini Bot and earn rewards!";
+    el.textContent =
+        text;
 
-    const shareUrl =
-        "https://t.me/share/url?url="
-        + encodeURIComponent(link)
-        + "&text="
-        + encodeURIComponent(text);
+    el.className =
+        isError
+            ? "status error"
+            : "status success";
 
-    window.open(
-        shareUrl,
-        "_blank"
+
+    setTimeout(
+        () => {
+
+            el.textContent =
+                "";
+
+            el.className =
+                "status";
+
+        },
+        5000
+    );
+}
+
+
+/* =====================================================
+   PANELS
+   ===================================================== */
+
+function openPanel(
+    panel
+){
+
+    const panels = [
+        "home",
+        "ads",
+        "tasks",
+        "history",
+        "withdraw"
+    ];
+
+
+    panels.forEach(
+        name => {
+
+            const element =
+                document.getElementById(
+                    name + "Panel"
+                );
+
+            if(element){
+
+                element.classList.toggle(
+                    "active",
+                    name === panel
+                );
+            }
+
+
+            const nav =
+                document.getElementById(
+                    "nav-" + name
+                );
+
+            if(nav){
+
+                nav.classList.toggle(
+                    "active",
+                    name === panel
+                );
+            }
+
+        }
     );
 
+
+    if(
+        panel === "history"
+    ){
+
+        loadHistory();
+    }
 }
 
 
-/* ==========================================
+/* =====================================================
    HISTORY
-========================================== */
+   ===================================================== */
 
 async function loadHistory(){
 
@@ -1014,6 +1349,11 @@ async function loadHistory(){
         document.getElementById(
             "historyList"
         );
+
+
+    list.innerHTML =
+        '<div class="loader">Loading history...</div>';
+
 
     try{
 
@@ -1028,10 +1368,13 @@ async function loadHistory(){
                             "application/json"
                     },
 
-                    body:JSON.stringify({
-                        initData:
-                            tg.initData
-                    })
+                    body:
+                        JSON.stringify({
+
+                            initData:
+                                tg.initData
+
+                        })
                 }
             );
 
@@ -1042,10 +1385,9 @@ async function loadHistory(){
         ){
 
             list.innerHTML =
-                "<div class='loading'>No data</div>";
+                '<div class="empty">No transactions yet.</div>';
 
             return;
-
         }
 
 
@@ -1053,30 +1395,52 @@ async function loadHistory(){
 
 
         data.transactions.forEach(
-            function(item){
+            tx => {
 
-                const div =
+                const item =
                     document.createElement(
                         "div"
                     );
 
-                div.className =
+                item.className =
                     "history-item";
 
-                div.innerHTML =
-                    "<strong>"
-                    + item.description
-                    + "</strong>"
-                    + "<span>"
-                    + item.amount
-                    + " USD₮ · "
-                    + item.type
-                    + "</span>";
+
+                const amount =
+                    Number(
+                        tx.amount || 0
+                    ).toFixed(2);
+
+
+                item.innerHTML = `
+
+                    <div>
+
+                        <div class="history-name">
+                            ${escapeHtml(
+                                tx.description
+                                || tx.type
+                            )}
+                        </div>
+
+                        <div class="history-date">
+                            ${formatDate(
+                                tx.created_at
+                            )}
+                        </div>
+
+                    </div>
+
+                    <div class="history-amount">
+                        +${amount} Birr
+                    </div>
+
+                `;
+
 
                 list.appendChild(
-                    div
+                    item
                 );
-
             }
         );
 
@@ -1084,98 +1448,139 @@ async function loadHistory(){
     }catch(error){
 
         list.innerHTML =
-            "<div class='loading'>Unable to load history.</div>";
+            '<div class="empty">Could not load history.</div>';
 
+        console.error(error);
     }
-
 }
 
 
-/* ==========================================
-   PAGE NAVIGATION
-========================================== */
+/* =====================================================
+   REFERRAL COPY
+   ===================================================== */
 
-function openPage(pageId){
+async function copyReferral(){
 
-    document
-        .querySelectorAll(".page")
-        .forEach(
-            function(page){
-
-                page.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-    document.getElementById(
-        pageId
-    ).classList.add(
-        "active"
-    );
-
-
-    document
-        .querySelectorAll(".nav button")
-        .forEach(
-            function(button){
-
-                button.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-    const map = {
-
-        homePage:"navHome",
-
-        adsPage:"navAds",
-
-        tasksPage:"navTasks",
-
-        historyPage:"navHistory",
-
-        withdrawPage:"navWithdraw"
-
-    };
-
-
-    if(map[pageId]){
-
+    const link =
         document.getElementById(
-            map[pageId]
-        ).classList.add(
-            "active"
+            "referralLink"
+        ).textContent;
+
+
+    try{
+
+        await navigator.clipboard.writeText(
+            link
         );
 
+
+        showStatus(
+            "Referral link copied."
+        );
+
+    }catch(error){
+
+        showStatus(
+            "Could not copy referral link.",
+            true
+        );
     }
+}
+
+
+/* =====================================================
+   REFERRAL SHARE
+   ===================================================== */
+
+function shareReferral(){
+
+    const link =
+        document.getElementById(
+            "referralLink"
+        ).textContent;
+
+
+    const text =
+        "Join ADEWA Mini Bot and earn rewards!";
+
+
+    const shareUrl =
+        "https://t.me/share/url?url="
+        + encodeURIComponent(link)
+        + "&text="
+        + encodeURIComponent(text);
 
 
     if(
-        pageId === "historyPage"
+        tg.openTelegramLink
     ){
 
-        loadHistory();
+        tg.openTelegramLink(
+            shareUrl
+        );
 
+    }else{
+
+        window.open(
+            shareUrl,
+            "_blank"
+        );
     }
-
 }
 
 
-/* ==========================================
-   START
-========================================== */
+/* =====================================================
+   HELPERS
+   ===================================================== */
 
-initializeAds();
+function escapeHtml(
+    text
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text || "";
+
+    return div.innerHTML;
+}
+
+
+function formatDate(
+    date
+){
+
+    if(!date){
+        return "";
+    }
+
+
+    try{
+
+        return new Date(
+            date
+        ).toLocaleString();
+
+    }catch(error){
+
+        return "";
+    }
+}
+
+
+/* =====================================================
+   START
+   ===================================================== */
+
+initAdsGram();
 
 loadUser();
 
 </script>
 
 </body>
+
     </html>
